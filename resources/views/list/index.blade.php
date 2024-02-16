@@ -157,7 +157,6 @@
                 var file = e.target.files[0];
                 var formData = new FormData();
                 formData.append('excelFile', file);
-                console.log('xxx');
                 $.ajax({
                     url: '/import-from-excel',
                     method: 'POST',
@@ -168,19 +167,14 @@
                     contentType: false,
                     processData: false,
                     success: function(response) {
-                        console.log('aaa')
                         alert('Data imported successfully.');
-                        console.log(response);
                         window.location.reload();
                     },
                     error: function(xhr, status, error) {
-                        console.log('bbb')
                         var errorMessage = xhr.status + ': ' + xhr.statusText;
                         alert('Error importing data: ' + errorMessage);
                     }
                 });
-                // alert('Data imported successfully.')
-                // window.location.reload();
             });
 
             // Tambahkan fungsi untuk menangani penambahan modul baru
@@ -203,7 +197,7 @@
                         status: newStatus
                     },
                     success: function(response) {
-                        alert('Data added successfully.');
+                        alert('Data imported successfully.');
                         window.location.reload();
 
                         // Bersihkan nilai input setelah entri ditambahkan

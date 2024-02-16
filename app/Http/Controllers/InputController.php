@@ -54,13 +54,9 @@ class InputController extends Controller
                     $status = $worksheet->getCellByColumnAndRow(4, $row)->getValue();
                     $link = $worksheet->getCellByColumnAndRow(5, $row)->getValue();
 
-                    // Mendapatkan ID terbesar dari database dan menambahkannya dengan 1
-                    $nextId = ListLink::max('id') + 1;
-
                     // Simpan data ke dalam database
                     $item = new ListLink();
 
-                    $item->id = $nextId;
                     $item->sub_cat = $subCategory;
                     $item->title = $title;
                     $item->status = $status;
