@@ -6,6 +6,16 @@
             <h6 class="display-4">List e-Learning Module</h6>
             <p class="has-line"></p>
             <div class="row mt-3">
+                <div class="col-md-12 mt-3">
+                    <div class="float-right">
+                        <button class="btn btn-primary ml-2" data-toggle="modal" data-target="#addModuleModal">Add New Module</button>
+                        <a href="{{ route('export') }}" class="btn btn-primary ml-1">Export to Excel</a>
+                        <div class="float-right">
+                        <label for="importFromExcel" class="btn btn-primary ml-2">Import from Excel</label>
+                        <input type="file" name="excelFile" id="importFromExcel" accept=".xls,.xlsx" style="display: none;">
+                    </div>
+                    </div>
+                </div>
                 <div class="col-md-6">
                     <label for="FilterCat">Sub-category:</label>
                     <select id="FilterCat" class="form-control">
@@ -24,17 +34,6 @@
                         @endforeach
                     </select>
                 </div>
-                <div class="col-md-12 mt-3">
-                    <div class="float-right">
-                        <button class="btn btn-primary ml-2" data-toggle="modal" data-target="#addModuleModal">Add New Module</button>
-                        <button id="exportToExcel" class="btn btn-primary ml-1">Export to Excel</button>
-                        <div class="float-right">
-                        <label for="importFromExcel" class="btn btn-primary ml-2">Import from Excel</label>
-                        <input type="file" name="excelFile" id="importFromExcel" accept=".xls,.xlsx" style="display: none;">
-                    </div>
-                    </div>
-                </div>
-
             </div>
             <br>
             <div class="container">
@@ -60,17 +59,17 @@
                                     <span class="badge badge-pill badge-secondary">{{ $list->status }}</span>
                                 @elseif($list->status === "Published")
                                     <span class="badge badge-pill badge-success">{{ $list->status }}</span>
-                                @elseif($list->status === "TakeDown")
+                                @elseif($list->status === "Takedown")
                                     <span class="badge badge-pill badge-danger">{{ $list->status }}</span>
                                 @endif
                             </td>
-                            <td><a href="{{ $list->link }}">{{ $list->link }}</a></td>
+                            <td><a href="{{ $list->link }}">Click Here</a></td>
                             <td class="d-flex align-items-center">
                                 <select class="form-control form-control-sm status-select mr-2">
                                     <option disabled selected>Change Status</option>
                                     <option value="Review">Review</option>
                                     <option value="Published">Published</option>
-                                    <option value="TakeDown">TakeDown</option>
+                                    <option value="Takedown">Takedown</option>
                                 </select>
 
                                 <button class="btn btn-primary update-status-btn">Update</button>
@@ -112,7 +111,7 @@
                         <select id="newStatus" class="form-control">
                             <option value="Review">Review</option>
                             <option value="Published">Published</option>
-                            <option value="TakeDown">TakeDown</option>
+                            <option value="Takedown">Takedown</option>
                         </select>
                     </div>
                 </form>
@@ -141,16 +140,13 @@
                 ],
                 "buttons": [
                     {
-                    extend: 'excelHtml5',
-                    exportOptions: {
-                    columns: [0, 1, 2, 3, 4] // Kolom yang akan diekspor (tidak termasuk Action)
-                    }
+                        extend: 'excelHtml5',
+                        text: 'Export to Excel',
+                        exportOptions: {
+                            columns: [1, 2, 3, 4]
+                        }
                     }
                 ]
-            });
-
-            $('#exportToExcel').on('click', function() {
-                table.button('.buttons-excel').trigger();
             });
 
             $('#importFromExcel').on('change', function(e) {
@@ -250,8 +246,8 @@
                             statusCell.append('<span class="badge badge-pill badge-secondary">Review</span>');
                         } else if (newStatus === "Published") {
                             statusCell.append('<span class="badge badge-pill badge-success">Published</span>');
-                        } else if (newStatus === "TakeDown") {
-                            statusCell.append('<span class="badge badge-pill badge-danger">TakeDown</span>');
+                        } else if (newStatus === "Takedown") {
+                            statusCell.append('<span class="badge badge-pill badge-danger">Takedown</span>');
                         }
                         selectDropdown.val('Change Status');
                     },

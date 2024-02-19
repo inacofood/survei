@@ -14,7 +14,7 @@
                 <li class="nav-item">
                     <form id="logout" action="/logout" method="POST">
                         @csrf
-                        <a class="nav-link btn btn-primary text-light shadow-none ml-md-4" href="javascript:;"
+                        <a class="nav-link btn btn-primary text-dark shadow-none ml-md-4" href="javascript:;"
                             onclick="document.getElementById('logout').submit();">Logout</a>
                     </form>
                 </li>

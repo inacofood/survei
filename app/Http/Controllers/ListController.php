@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\ListLink;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\ListLinksExport;
 
 class ListController extends Controller
 {
@@ -38,6 +40,10 @@ class ListController extends Controller
 
         // Kirim respons ke klien
         return response()->json(['message' => 'Status updated successfully']);
+    }
+    public function export()
+    {
+        return Excel::download(new ListLinksExport, 'list_links.xlsx');
     }
 
 

@@ -15,7 +15,7 @@ class InputController extends Controller
             'title' => 'required|string',
             'subCategory' => 'required|string',
             'link' => 'required|string',
-            'status' => 'required|string|in:Review,Published,TakeDown',
+            'status' => 'required|string|in:Review,Published,Takedown',
         ]);
 
         // Simpan data ke dalam database

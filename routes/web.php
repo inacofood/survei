@@ -30,3 +30,6 @@ Route::get('/subcategory-options', [ListController::class, 'getOptions']);
 Route::post('/update-status', 'ListController@updateStatus');
 Route::post('/add-new-module', 'InputController@addNewModule');
 Route::post('/import-from-excel', 'InputController@importFromExcel');
+Route::get('/export-list-links', 'ListController@export')->name('export');
+
+
