@@ -14,20 +14,42 @@ class ListController extends Controller
     {
         $subCategories = ListLink::select('sub_cat')->distinct()->get();
         $statuses = ListLink::select('status')->distinct()->get();
-        $listItems = ListLink::orderBy('id', 'asc')->get();
+        $listItems = ListLink::orderBy('id', 'desc')->get();
         return view('list.index', compact('listItems', 'subCategories','statuses'));
     }
 
-    public function updateStatus(Request $request)
+    public function getModalData(Request $request)
+    {
+        $itemId = $request->input('id'); // Get ID from request
+        // Find the link based on the ID
+        $link = ListLink::find($itemId);
+
+        if ($link) {
+            // If link is found, return data as JSON response
+            return response()->json($link);
+        } else {
+            // If link is not found, return response with appropriate status code
+            return response()->json(['error' => 'Link not found'], 404);
+        }
+    }
+
+    public function updateData(Request $request)
     {
         // Validasi permintaan
         $request->validate([
-            'id' => 'required|integer',
-            'status' => 'required|string'
+            'title' => 'required|string',
+            'category' => 'required|string',
+            'subcategory' => 'required|string',
+            'link' => 'required|string',
+            'status' => 'required|string|in:Review,Published,Takedown',
         ]);
 
         // Ambil data dari permintaan
         $itemId = $request->id;
+        $newTitle = $request->title;
+        $newCategory = $request->category;
+        $newSubCategory = $request->subcategory;
+        $newLink = $request->link;
         $newStatus = $request->status;
 
         // Lakukan pembaruan status di database sesuai dengan $itemId
@@ -35,12 +57,31 @@ class ListController extends Controller
         if (!$item) {
             return response()->json(['error' => 'Item not found'], 404);
         }
+        $item->title = $newTitle;
+        $item->category = $newCategory;
+        $item->sub_cat = $newSubCategory;
+        $item->link = $newLink;
         $item->status = $newStatus;
         $item->save();
 
         // Kirim respons ke klien
         return response()->json(['message' => 'Status updated successfully']);
     }
+
+    public function deleteData(Request $request)
+    {
+        $itemId = $request->id;
+
+        try {
+            $item = ListLink::findOrFail($itemId);
+            $item->delete();
+
+            return response()->json(['success' => true]);
+        } catch (\Exception $e) {
+            return response()->json(['success' => false, 'message' => $e->getMessage()], 500);
+        }
+    }
+
     public function export()
     {
         return Excel::download(new ListLinksExport, 'list_links.xlsx');

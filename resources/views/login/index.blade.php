@@ -15,7 +15,8 @@
             <div class="row h-100 align-items-center">
                 <div class="col-md-7">
                     <div class="header-content">
-                        <h3 class="header-title"><strong class="text-primary">e-Learning</strong><span class="text-light"> Module</span></h3>
+                        <!-- <h3 class="header-title"><strong class="text-primary">e-Learning</strong><span class="text-light"> Module</span></h3> -->
+                        <h3 class="header-title"><span class="text-light">e-Module</span></h3>
                     </div>
                 </div>
                 <div class="col-md-4 d-none d-md-block mx-auto">

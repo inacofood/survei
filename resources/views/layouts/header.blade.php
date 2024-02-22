@@ -2,7 +2,7 @@
 <!-- "background-color: #007BFF;" -->
     <div class="container">
         <a class="navbar-brand" href="/">
-            <strong class="text-light"><strong class="text-primary">INACO</strong> | e-Learning Module</strong>
+            <strong class="text-light"><strong class="text-primary">INACO</strong> | e-Module</strong>
         </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">

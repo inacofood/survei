@@ -23,6 +23,7 @@ class ListLinksExport implements FromCollection, WithHeadings
     {
         return [
             'ID',
+            'Category',
             'Sub-category',
             'Title',
             'Status',
