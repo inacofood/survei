@@ -32,6 +32,12 @@ class InputController extends Controller
         return response()->json($item);
     }
 
+    public function Download() {
+        $file_name = "Template_Import_emodule.xlsx";
+        $file_path = public_path($file_name);
+        return response()->download($file_path);
+      }
+
     public function importFromExcel(Request $request)
     {
         if ($request->hasFile('excelFile') && $request->file('excelFile')->isValid()) {

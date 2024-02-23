@@ -33,4 +33,5 @@ Route::post('/import-from-excel', 'InputController@importFromExcel');
 Route::get('/export-list-links', 'ListController@export')->name('export');
 Route::get('/get-modal-data', 'ListController@getModalData');
 Route::post('/delete', 'ListController@deleteData');
+Route::get('/download', 'InputController@Download');
 

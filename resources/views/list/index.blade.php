@@ -10,10 +10,11 @@
                     <div class="float-right">
                         <button class="btn btn-primary ml-2" data-toggle="modal" data-target="#addModuleModal">Add New Module</button>
                         <a href="{{ route('export') }}" class="btn btn-primary ml-1">Export to Excel</a>
-                        <div class="float-right">
-                        <label for="importFromExcel" class="btn btn-primary ml-2">Import from Excel</label>
-                        <input type="file" name="excelFile" id="importFromExcel" accept=".xls,.xlsx" style="display: none;">
-                    </div>
+                        <button class="btn btn-primary ml-2" data-toggle="modal" data-target="#importModuleModal">Import New Module</button>
+                        <!-- <div class="float-right">
+                            <label for="importFromExcel" class="btn btn-primary ml-2">Import from Excel</label>
+                            <input type="file" name="excelFile" id="importFromExcel" accept=".xls,.xlsx" style="display: none;">
+                        </div> -->
                     </div>
                 </div>
                 <!-- <div class="col-md-6">
@@ -73,6 +74,7 @@
         </div>
     </section>
 @include('list.modal-add')
+@include('list.modal-import')
 @include('list.modal-edit')
 @endsection
 
@@ -98,6 +100,31 @@
                     }
                 ],
             });
+
+            // $('#importFromExcel').on('change', function(e) {
+            //     var file = e.target.files[0];
+            //     var formData = new FormData();
+            //     formData.append('excelFile', file);
+            //     $.ajax({
+            //         url: '/import-from-excel',
+            //         method: 'POST',
+            //         headers: {
+            //             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            //         },
+            //         data: formData,
+            //         contentType: false,
+            //         processData: false,
+            //         success: function(response) {
+            //             alert('Data imported successfully.');
+            //             window.location.reload();
+            //         },
+            //         error: function(xhr, status, error) {
+            //             var errorMessage = xhr.status + ': ' + xhr.statusText;
+            //             alert('Error importing data: ' + errorMessage);
+            //         }
+            //     });
+            // });
+
 
             $('#importFromExcel').on('change', function(e) {
                 var file = e.target.files[0];
