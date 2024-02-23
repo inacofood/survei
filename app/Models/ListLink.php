@@ -11,6 +11,7 @@ class ListLink extends Model
     protected $primaryKey = 'id'; // Jika primary key tabel Anda bukan 'id', sesuaikan dengan nama primary key yang digunakan
 
     public $fillable = [
+        'category',
         'sub_cat',
         'title',
         'link',

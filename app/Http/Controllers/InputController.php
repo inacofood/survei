@@ -13,15 +13,17 @@ class InputController extends Controller
         // Validasi input
         $request->validate([
             'title' => 'required|string',
-            'subCategory' => 'required|string',
+            'category' => 'required|string',
+            'subcategory' => 'required|string',
             'link' => 'required|string',
-            'status' => 'required|string|in:Review,Published,TakeDown',
+            'status' => 'required|string|in:Review,Published,Takedown',
         ]);
 
         // Simpan data ke dalam database
         $item = new ListLink();
         $item->title = $request->title;
-        $item->sub_cat = $request->subCategory;
+        $item->category = $request->category;
+        $item->sub_cat = $request->subcategory;
         $item->link = $request->link;
         $item->status = $request->status;
         $item->save();
@@ -29,6 +31,12 @@ class InputController extends Controller
         // Berikan respons JSON yang berisi data modul yang baru ditambahkan
         return response()->json($item);
     }
+
+    public function Download() {
+        $file_name = "Template_Import_emodule.xlsx";
+        $file_path = public_path($file_name);
+        return response()->download($file_path);
+      }
 
     public function importFromExcel(Request $request)
     {
@@ -47,17 +55,20 @@ class InputController extends Controller
                     $worksheet->getCellByColumnAndRow(2, $row)->getValue() &&
                     $worksheet->getCellByColumnAndRow(3, $row)->getValue() &&
                     $worksheet->getCellByColumnAndRow(4, $row)->getValue() &&
+                    $worksheet->getCellByColumnAndRow(5, $row)->getValue() &&
                     $worksheet->getCellByColumnAndRow(5, $row)->getValue()
                 ) {
-                    $subCategory = $worksheet->getCellByColumnAndRow(2, $row)->getValue();
-                    $title = $worksheet->getCellByColumnAndRow(3, $row)->getValue();
-                    $status = $worksheet->getCellByColumnAndRow(4, $row)->getValue();
-                    $link = $worksheet->getCellByColumnAndRow(5, $row)->getValue();
+                    $category = $worksheet->getCellByColumnAndRow(2, $row)->getValue();
+                    $subcategory = $worksheet->getCellByColumnAndRow(3, $row)->getValue();
+                    $title = $worksheet->getCellByColumnAndRow(4, $row)->getValue();
+                    $status = $worksheet->getCellByColumnAndRow(5, $row)->getValue();
+                    $link = $worksheet->getCellByColumnAndRow(6, $row)->getValue();
 
                     // Simpan data ke dalam database
                     $item = new ListLink();
 
-                    $item->sub_cat = $subCategory;
+                    $item->category = $category;
+                    $item->sub_cat = $subcategory;
                     $item->title = $title;
                     $item->status = $status;
                     $item->link = $link;

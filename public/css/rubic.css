@@ -1834,7 +1834,7 @@ pre code {
     white-space: nowrap; /* Prevent content wrapping */
     overflow: hidden; /* Hide excessive content */
     text-overflow: ellipsis; /* Add ellipsis if content is too long */
-    max-width: 350px; /* Set a maximum width for the cells */
+    max-width: 400px; /* Set a maximum width for the cells */
   }
 
 
@@ -10840,7 +10840,7 @@ a.text-light:hover, a.text-light:focus {
 }
 
 .text-dark {
-  color: #343a40 !important;
+  color: #000000 !important;
 }
 
 a.text-dark:hover, a.text-dark:focus {
@@ -11411,8 +11411,8 @@ textarea {
 }
 
 .header {
-  background: -webkit-linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), #efefef url(../imgs/header.jpg);
-  background: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), #efefef url(../imgs/header.jpg);
+  background: -webkit-linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), #efefef url(../imgs/bg-login.jpg);
+  background: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), #efefef url(../imgs/bg-login.jpg);
   background-size: cover;
   background-position: center center;
   background-attachment: fixed;
