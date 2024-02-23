@@ -8,9 +8,9 @@
             <div class="row mt-3">
                 <div class="col-md-12 mt-3">
                     <div class="float-right">
-                        <button class="btn btn-primary ml-2" data-toggle="modal" data-target="#addModuleModal">Add New Module</button>
+                        <button class="btn btn-primary ml-1" data-toggle="modal" data-target="#addModuleModal">Add New Module</button>
                         <a href="{{ route('export') }}" class="btn btn-primary ml-1">Export to Excel</a>
-                        <button class="btn btn-primary ml-2" data-toggle="modal" data-target="#importModuleModal">Import New Module</button>
+                        <button class="btn btn-primary ml-1" data-toggle="modal" data-target="#importModuleModal">Import New Module</button>
                         <!-- <div class="float-right">
                             <label for="importFromExcel" class="btn btn-primary ml-2">Import from Excel</label>
                             <input type="file" name="excelFile" id="importFromExcel" accept=".xls,.xlsx" style="display: none;">
