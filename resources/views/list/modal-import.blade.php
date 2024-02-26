@@ -8,13 +8,16 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form id="importModuleForm">
-                    <div class="form-group text-center">
+                <form id="importModuleForm" action="{{ route('import') }}" method="post" enctype="multipart/form-data">
+                @csrf
+                    <div class="form-group text-left">
                         <a href="/download">Download Template </a>
                     </div>
-                    <div class="form-group text-center">
-                        <label for="importFromExcel" class="btn btn-primary ml-2">Import from Excel</label>
-                        <input type="file" name="excelFile" id="importFromExcel" accept=".xls,.xlsx" style="display: none;">
+                    <div class="form-group text-left">
+                        <input type="file" name="excelFile" id="importFromExcel" accept=".xls,.xlsx">
+                    </div>
+                    <div class="form-group text-right">
+                    <button type="submit" class="btn btn-primary ml-2" id="submitBtn">Submit</button>
                     </div>
                 </form>
             </div>

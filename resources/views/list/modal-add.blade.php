@@ -8,37 +8,37 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form id="addModuleForm">
+                <form id="addModuleForm" action="{{ route('add') }}" method="post">
+                @csrf
                     <div class="form-group">
                         <label for="newTitle">Title</label>
-                        <input type="text" class="form-control" id="newTitle" placeholder="Enter title">
+                        <input type="text" class="form-control" id="newTitle" name="title" placeholder="Enter title">
                     </div>
                     <div class="form-group">
                         <label for="newcategory">Category</label>
-                        <input type="text" class="form-control" id="newcategory" placeholder="Enter category">
+                        <input type="text" class="form-control" id="newcategory" name="category" placeholder="Enter category">
                     </div>
                     <div class="form-group">
                         <label for="newSubcategory">Sub-category</label>
-                        <input type="text" class="form-control" id="newSubcategory" placeholder="Enter Sub-category">
+                        <input type="text" class="form-control" id="newSubcategory" name="subcategory" placeholder="Enter Sub-category">
                     </div>
                     <div class="form-group">
                         <label for="newLink">Link</label>
-                        <input type="text" class="form-control" id="newLink" placeholder="Enter link">
+                        <input type="text" class="form-control" id="newLink" name="link" placeholder="Enter link">
                     </div>
                     <div class="form-group">
                         <label for="newStatus">Status</label>
-                        <select id="newStatus" class="form-control">
+                        <select id="newStatus" name="status" class="form-control">
                             <option value="Review">Review</option>
                             <option value="Published">Published</option>
                             <option value="Takedown">Takedown</option>
                         </select>
                     </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary" id="addModuleBtn">Add Module</button>
+                    </div>
                 </form>
-            </div>
-
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" id="addModuleBtn">Add Module</button>
             </div>
         </div>
     </div>

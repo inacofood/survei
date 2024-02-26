@@ -55,7 +55,7 @@ class ListController extends Controller
         // Lakukan pembaruan status di database sesuai dengan $itemId
         $item = ListLink::find($itemId);
         if (!$item) {
-            return response()->json(['error' => 'Item not found'], 404);
+            return redirect()->back()->with('error', 'Item not found.');
         }
         $item->title = $newTitle;
         $item->category = $newCategory;
@@ -65,22 +65,23 @@ class ListController extends Controller
         $item->save();
 
         // Kirim respons ke klien
-        return response()->json(['message' => 'Status updated successfully']);
+        return redirect()->back()->with('success', 'Data updated successfully.');
+
+
     }
 
-    public function deleteData(Request $request)
+    public function deleteData($id)
     {
-        $itemId = $request->id;
-
         try {
-            $item = ListLink::findOrFail($itemId);
+            $item = ListLink::findOrFail($id);
             $item->delete();
 
-            return response()->json(['success' => true]);
+            return redirect()->back()->with('success', 'Item deleted successfully');
         } catch (\Exception $e) {
-            return response()->json(['success' => false, 'message' => $e->getMessage()], 500);
+            return redirect()->back()->with('error', 'Failed to delete item: ' . $e->getMessage());
         }
     }
+
 
     public function export()
     {

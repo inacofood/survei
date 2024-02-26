@@ -27,11 +27,11 @@ Route::post('/logout', 'AuthController@logout')->name('logout');
 
 Route::get('/', [ListController::class, 'index'])->name('list.index')->middleware('auth');
 Route::get('/subcategory-options', [ListController::class, 'getOptions']);
-Route::post('/update-data', 'ListController@updateData');
-Route::post('/add-new-module', 'InputController@addNewModule');
-Route::post('/import-from-excel', 'InputController@importFromExcel');
+Route::post('/update-data', 'ListController@updateData')->name('update');
+Route::post('/add-new-module', 'InputController@addNewModule')->name('add');
+Route::post('/import-from-excel', 'InputController@importFromExcel')->name('import');
 Route::get('/export-list-links', 'ListController@export')->name('export');
 Route::get('/get-modal-data', 'ListController@getModalData');
-Route::post('/delete', 'ListController@deleteData');
+Route::delete('/delete/{id}', 'ListController@deleteData')->name('delete');
 Route::get('/download', 'InputController@Download');
 
