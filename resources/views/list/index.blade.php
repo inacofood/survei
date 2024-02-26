@@ -136,8 +136,6 @@
             $('.btn-delete').click(function() {
                 var itemId = $(this).data('id');
                 var itemTitle = $(this).data('title');
-                console.log(itemId)
-                console.log(itemTitle)
                 if (confirm("Are you sure you want to delete " + itemTitle + "?")) {
                     // If the user confirms deletion
                     $.ajax({
