@@ -8,38 +8,40 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form id="editModuleForm">
-                    <input type="hidden" id="editModuleId">
+                <form id="editModuleForm" action="{{ route('update') }}" method="post">
+                @csrf
+                    <input type="hidden" id="editItemId" name="id">
                     <div class="form-group">
                         <label for="editTitle">Title:</label>
-                        <input type="text" class="form-control" id="editTitle" placeholder="Enter title">
+                        <input type="text" class="form-control" id="editTitle" name="title" placeholder="Enter title">
                     </div>
                     <div class="form-group">
                         <label for="editCategory">Category:</label>
-                        <input type="text" class="form-control" id="editCategory" placeholder="Enter category">
+                        <input type="text" class="form-control" id="editCategory" name="category" placeholder="Enter category">
                     </div>
                     <div class="form-group">
                         <label for="editSubcategory">Sub-category:</label>
-                        <input type="text" class="form-control" id="editSubcategory" placeholder="Enter Sub-category">
+                        <input type="text" class="form-control" id="editSubcategory" name="subcategory" placeholder="Enter Sub-category">
                     </div>
                     <div class="form-group">
                         <label for="editLink">Link:</label>
-                        <input type="text" class="form-control" id="editLink" placeholder="Enter link">
+                        <input type="text" class="form-control" id="editLink"name="link"  placeholder="Enter link">
                     </div>
                     <div class="form-group">
                         <label for="editStatus">Status:</label>
-                        <select id="editStatus" class="form-control" aria-placeholder="">
+                        <select id="editStatus" class="form-control" name="status" aria-placeholder="">
                             <option value="Review">Review</option>
                             <option value="Published">Published</option>
                             <option value="Takedown">Takedown</option>
                         </select>
                     </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary" id="updateModuleBtn">Update Module</button>
+                    </div>
                 </form>
             </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" id="updateModuleBtn">Update Module</button>
-            </div>
+
         </div>
     </div>
 </div>
