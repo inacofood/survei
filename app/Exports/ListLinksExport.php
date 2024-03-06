@@ -13,16 +13,26 @@ class ListLinksExport implements FromCollection, WithHeadings
     {
         return ListLink::all()->map(function ($item) {
             // Menghapus kolom created_at dan updated_at
+            unset($item['id']);
             unset($item['created_at']);
             unset($item['updated_at']);
-            return $item;
+            // return $item;
+
+            // Mengatur ulang urutan kolom
+            return [
+                $item['category'],
+                $item['sub_cat'],
+                $item['title'],
+                $item['status'],
+                $item['link'],
+            ];
+
         });
     }
 
     public function headings(): array
     {
         return [
-            'ID',
             'Category',
             'Sub-category',
             'Title',
