@@ -77,22 +77,28 @@ class InputController extends Controller
                         // Manual validation
                         if (!empty($category) && !empty($subcategory) && !empty($title) && !empty($status) && !empty($link) && !empty($video))
                         {
-                            if (in_array($status, ['Review', 'Published', 'Takedown']))
+                            if (in_array($category, ['Hard Skills', 'Soft Skills', 'Technical Skills']))
                             {
-                                if (in_array($category, ['Hard Skills', 'Soft Skills', 'Technical Skills'])) {
-                                    $item = new ListLink();
-                                    $item->category = $category;
-                                    $item->sub_cat = $subcategory;
-                                    $item->title = $title;
-                                    $item->status = $status;
-                                    $item->link = $link;
-                                    $item->video = $request->video;
-                                    $item->save();
+                                if (in_array($status, ['Review', 'Published', 'Takedown']))
+                                {
+                                    if (is_int($video))
+                                    {
+                                        $item = new ListLink();
+                                        $item->category = $category;
+                                        $item->sub_cat = $subcategory;
+                                        $item->title = $title;
+                                        $item->status = $status;
+                                        $item->link = $link;
+                                        $item->video = $video;
+                                        $item->save();
+                                    } else {
+                                        return back()->with('error', 'Video must be a number at row ' . $row);
+                                    }
                                 } else {
-                                    return back()->with('error', 'Invalid category at row ' . $row);
+                                    return back()->with('error', 'Invalid status at row ' . $row);
                                 }
                             } else {
-                                return back()->with('error', 'Invalid status at row ' . $row);
+                                return back()->with('error', 'Invalid category at row ' . $row);
                             }
                         } else {
                             return back()->with('error', 'Missing data at row ' . $row);
