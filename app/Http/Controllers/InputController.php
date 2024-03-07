@@ -79,15 +79,18 @@ class InputController extends Controller
                         {
                             if (in_array($status, ['Review', 'Published', 'Takedown']))
                             {
-                                // Simpan data ke dalam database
-                                $item = new ListLink();
-                                $item->category = $category;
-                                $item->sub_cat = $subcategory;
-                                $item->title = $title;
-                                $item->status = $status;
-                                $item->link = $link;
-                                $item->video = $request->video;
-                                $item->save();
+                                if (in_array($category, ['Hard Skills', 'Soft Skills', 'Technical Skills'])) {
+                                    $item = new ListLink();
+                                    $item->category = $category;
+                                    $item->sub_cat = $subcategory;
+                                    $item->title = $title;
+                                    $item->status = $status;
+                                    $item->link = $link;
+                                    $item->video = $request->video;
+                                    $item->save();
+                                } else {
+                                    return back()->with('error', 'Invalid category at row ' . $row);
+                                }
                             } else {
                                 return back()->with('error', 'Invalid status at row ' . $row);
                             }
