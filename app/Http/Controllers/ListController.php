@@ -38,9 +38,10 @@ class ListController extends Controller
         // Validasi permintaan
         $request->validate([
             'title' => 'required|string',
-            'category' => 'required|string',
+            'category' => 'required|string|in:Hard Skills, Soft Skills, Technical Skills',
             'subcategory' => 'required|string',
             'link' => 'required|string',
+            'video' => 'required|integer',
             'status' => 'required|string|in:Review,Published,Takedown',
         ]);
 
@@ -50,6 +51,7 @@ class ListController extends Controller
         $newCategory = $request->category;
         $newSubCategory = $request->subcategory;
         $newLink = $request->link;
+        $newVideo = $request->video;
         $newStatus = $request->status;
 
         // Lakukan pembaruan status di database sesuai dengan $itemId
@@ -61,6 +63,7 @@ class ListController extends Controller
         $item->category = $newCategory;
         $item->sub_cat = $newSubCategory;
         $item->link = $newLink;
+        $item->video = $newVideo;
         $item->status = $newStatus;
         $item->save();
 

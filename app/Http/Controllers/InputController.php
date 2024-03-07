@@ -11,11 +11,13 @@ class InputController extends Controller
     public function addNewModule(Request $request)
     {
         // Validasi input
+        // dd($request);
         $request->validate([
             'title' => 'required|string',
-            'category' => 'required|string',
+            'category' => 'required|string|in:Hard Skills, Soft Skills, Technical Skills',
             'subcategory' => 'required|string',
             'link' => 'required|string',
+            'video' => 'required|integer',
             'status' => 'required|string|in:Review,Published,Takedown',
         ]);
 
@@ -26,6 +28,7 @@ class InputController extends Controller
             $item->category = $request->category;
             $item->sub_cat = $request->subcategory;
             $item->link = $request->link;
+            $item->video = $request->video;
             $item->status = $request->status;
             $item->save();
 
@@ -37,64 +40,70 @@ class InputController extends Controller
         }
     }
 
-
     public function Download() {
-        $file_name = "Template_Import_emodule.xlsx";
+        $file_name = "template_Import_emodule.xlsx";
         $file_path = public_path($file_name);
         return response()->download($file_path);
-      }
+    }
 
-      public function importFromExcel(Request $request)
-      {
-          try {
-              if ($request->hasFile('excelFile') && $request->file('excelFile')->isValid()) {
-                  $excelFile = $request->file('excelFile');
-                  $filePath = $excelFile->storeAs('excel', 'newInput.xlsx');
+    public function importFromExcel(Request $request)
+    {
+        try
+        {
+            if ($request->hasFile('excelFile') && $request->file('excelFile')->isValid())
+            {
+                $excelFile = $request->file('excelFile');
+                $filePath = $excelFile->storeAs('excel', 'newInput.xlsx');
 
-                  $reader = IOFactory::createReaderForFile($excelFile->path());
-                  $spreadsheet = $reader->load($excelFile->path());
-                  $worksheet = $spreadsheet->getActiveSheet();
-                  $highestRow = $worksheet->getHighestDataRow();
+                $reader = IOFactory::createReaderForFile($excelFile->path());
+                $spreadsheet = $reader->load($excelFile->path());
+                $worksheet = $spreadsheet->getActiveSheet();
+                $highestRow = $worksheet->getHighestDataRow();
 
-                  for ($row = 2; $row <= $highestRow; ++$row) {
-                      $category = $worksheet->getCellByColumnAndRow(2, $row)->getValue();
-                      $subcategory = $worksheet->getCellByColumnAndRow(3, $row)->getValue();
-                      $title = $worksheet->getCellByColumnAndRow(4, $row)->getValue();
-                      $status = $worksheet->getCellByColumnAndRow(5, $row)->getValue();
-                      $link = $worksheet->getCellByColumnAndRow(6, $row)->getValue();
+                for ($row = 2; $row <= $highestRow; ++$row)
+                {
+                    $category = $worksheet->getCellByColumnAndRow(1, $row)->getValue();
+                    $subcategory = $worksheet->getCellByColumnAndRow(2, $row)->getValue();
+                    $title = $worksheet->getCellByColumnAndRow(3, $row)->getValue();
+                    $status = $worksheet->getCellByColumnAndRow(4, $row)->getValue();
+                    $link = $worksheet->getCellByColumnAndRow(5, $row)->getValue();
+                    $video = $worksheet->getCellByColumnAndRow(6, $row)->getValue();
 
-                      // Check if row is empty
-                      $rowData = [$category, $subcategory, $title, $status, $link];
-                      if (array_filter($rowData)) {
-                          // Manual validation
-                          if (!empty($category) && !empty($subcategory) && !empty($title) && !empty($status) && !empty($link)) {
-                              if (in_array($status, ['Review', 'Published', 'Takedown'])) {
-                                  // Simpan data ke dalam database
-                                  $item = new ListLink();
-                                  $item->category = $category;
-                                  $item->sub_cat = $subcategory;
-                                  $item->title = $title;
-                                  $item->status = $status;
-                                  $item->link = $link;
-                                  $item->save();
-                              } else {
-                                  return back()->with('error', 'Invalid status at row ' . $row);
-                              }
-                          } else {
-                              return back()->with('error', 'Missing data at row ' . $row);
-                          }
-                      }
-                  }
+                    // Check if row is empty
+                    $rowData = [$category, $subcategory, $title, $status, $link, $video];
 
-                  // Setelah impor selesai, arahkan pengguna ke tampilan yang sesuai
-                  return redirect()->back()->with('success', 'New modules added successfully.');
-              } else {
-                  return back()->with('error', 'No valid file uploaded.');
-              }
-          } catch (\Exception $e) {
-              return back()->with('error', 'Failed to import data: ' . $e->getMessage());
-          }
-      }
+                    if (array_filter($rowData))
+                    {
+                        // Manual validation
+                        if (!empty($category) && !empty($subcategory) && !empty($title) && !empty($status) && !empty($link) && !empty($video))
+                        {
+                            if (in_array($status, ['Review', 'Published', 'Takedown']))
+                            {
+                                // Simpan data ke dalam database
+                                $item = new ListLink();
+                                $item->category = $category;
+                                $item->sub_cat = $subcategory;
+                                $item->title = $title;
+                                $item->status = $status;
+                                $item->link = $link;
+                                $item->video = $request->video;
+                                $item->save();
+                            } else {
+                                return back()->with('error', 'Invalid status at row ' . $row);
+                            }
+                        } else {
+                            return back()->with('error', 'Missing data at row ' . $row);
+                        }
+                    }
+                }
 
-
+                // Setelah impor selesai, arahkan pengguna ke tampilan yang sesuai
+                return redirect()->back()->with('success', 'New modules added successfully.');
+            } else {
+                return back()->with('error', 'No valid file uploaded.');
+            }
+        } catch (\Exception $e) {
+            return back()->with('error', 'Failed to import data: ' . $e->getMessage());
+        }
+    }
 }

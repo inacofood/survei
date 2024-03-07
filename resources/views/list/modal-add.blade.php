@@ -8,16 +8,25 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form id="addModuleForm" action="{{ route('add') }}" method="post">
+                <form id="addModuleForm" action="{{ route('add') }}" method="post" enctype="multipart/form-data">
                 @csrf
                     <div class="form-group">
-                        <label for="newTitle">Title</label>
-                        <input type="text" class="form-control" id="newTitle" name="title" placeholder="Enter title">
+                        <label for="newTitle">Courses</label>
+                        <input type="text" class="form-control" id="newTitle" name="title" placeholder="Enter courses">
                     </div>
                     <div class="form-group">
+                        <label for="newCategory">Category</label>
+                        <select id="newCategory" name="category" class="form-control">
+                            <option value="Hard Skills">Hard Skills</option>
+                            <option value="Soft Skills">Soft Skills</option>
+                            <option value="Technical Skills">Technical Skills</option>
+                        </select>
+                    </div>
+                    <!-- <div class="form-group">
                         <label for="newcategory">Category</label>
                         <input type="text" class="form-control" id="newcategory" name="category" placeholder="Enter category">
-                    </div>
+                    </div> -->
+
                     <div class="form-group">
                         <label for="newSubcategory">Sub-category</label>
                         <input type="text" class="form-control" id="newSubcategory" name="subcategory" placeholder="Enter Sub-category">
@@ -25,6 +34,10 @@
                     <div class="form-group">
                         <label for="newLink">Link</label>
                         <input type="text" class="form-control" id="newLink" name="link" placeholder="Enter link">
+                    </div>
+                    <div class="form-group">
+                        <label for="newVideo">Video</label>
+                        <input type="number" class="form-control" id="newVideo" name="video" placeholder="Enter video">
                     </div>
                     <div class="form-group">
                         <label for="newStatus">Status</label>

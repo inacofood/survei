@@ -8,17 +8,27 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form id="editModuleForm" action="{{ route('update') }}" method="post">
+                <form id="editModuleForm" action="{{ route('update') }}" method="post" enctype="multipart/form-data">
                 @csrf
                     <input type="hidden" id="editItemId" name="id">
                     <div class="form-group">
-                        <label for="editTitle">Title:</label>
-                        <input type="text" class="form-control" id="editTitle" name="title" placeholder="Enter title">
+                        <label for="editTitle">Courses:</label>
+                        <input type="text" class="form-control" id="editTitle" name="title" placeholder="Enter courses">
                     </div>
                     <div class="form-group">
                         <label for="editCategory">Category:</label>
-                        <input type="text" class="form-control" id="editCategory" name="category" placeholder="Enter category">
+                        <select id="editCategory" name="category" class="form-control" aria-placeholder="">
+                            <option value="Hard Skills">Hard Skills</option>
+                            <option value="Soft Skills">Soft Skills</option>
+                            <option value="Technical Skills">Technical Skills</option>
+                        </select>
                     </div>
+
+                    <!-- <div class="form-group">
+                        <label for="editCategory">Category:</label>
+                        <input type="text" class="form-control" id="editCategory" name="category" placeholder="Enter category">
+                    </div> -->
+
                     <div class="form-group">
                         <label for="editSubcategory">Sub-category:</label>
                         <input type="text" class="form-control" id="editSubcategory" name="subcategory" placeholder="Enter Sub-category">
@@ -26,6 +36,10 @@
                     <div class="form-group">
                         <label for="editLink">Link:</label>
                         <input type="text" class="form-control" id="editLink"name="link"  placeholder="Enter link">
+                    </div>
+                    <div class="form-group">
+                        <label for="editVideo">Video:</label>
+                        <input type="number" class="form-control" id="editVideo" name="video" placeholder="Enter video">
                     </div>
                     <div class="form-group">
                         <label for="editStatus">Status:</label>
