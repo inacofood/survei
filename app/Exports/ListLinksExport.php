@@ -25,6 +25,7 @@ class ListLinksExport implements FromCollection, WithHeadings
                 $item['title'],
                 $item['status'],
                 $item['link'],
+                $item['video'],
             ];
 
         });
@@ -38,6 +39,7 @@ class ListLinksExport implements FromCollection, WithHeadings
             'Title',
             'Status',
             'Link',
+            'Video',
         ];
     }
 }

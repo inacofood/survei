@@ -13,12 +13,12 @@ class InputController extends Controller
         // Validasi input
         // dd($request);
         $request->validate([
-            'title' => 'required|string',
-            'category' => 'required|string|in:Hard Skills, Soft Skills, Technical Skills',
-            'subcategory' => 'required|string',
-            'link' => 'required|string',
-            'video' => 'required|integer',
-            'status' => 'required|string|in:Review,Published,Takedown',
+            'title' => 'required',
+            'category' => 'required',
+            'subcategory' => 'required',
+            'link' => 'required',
+            'video' => 'required',
+            'status' => 'required',
         ]);
 
         // Simpan data ke dalam database
@@ -41,7 +41,7 @@ class InputController extends Controller
     }
 
     public function Download() {
-        $file_name = "template_Import_emodule.xlsx";
+        $file_name = "template_import_emodule.xlsx";
         $file_path = public_path($file_name);
         return response()->download($file_path);
     }

@@ -37,12 +37,12 @@ class ListController extends Controller
     {
         // Validasi permintaan
         $request->validate([
-            'title' => 'required|string',
-            'category' => 'required|string|in:Hard Skills, Soft Skills, Technical Skills',
-            'subcategory' => 'required|string',
-            'link' => 'required|string',
-            'video' => 'required|integer',
-            'status' => 'required|string|in:Review,Published,Takedown',
+            'title' => 'required',
+            'category' => 'required',
+            'subcategory' => 'required',
+            'link' => 'required',
+            'video' => 'required',
+            'status' => 'required',
         ]);
 
         // Ambil data dari permintaan

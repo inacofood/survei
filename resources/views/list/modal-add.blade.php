@@ -15,7 +15,7 @@
                         <input type="text" class="form-control" id="newTitle" name="title" placeholder="Enter courses">
                     </div>
                     <div class="form-group">
-                        <label for="newCategory">Category</label>
+                        <label for="newcategory">Category</label>
                         <select id="newCategory" name="category" class="form-control">
                             <option value="Hard Skills">Hard Skills</option>
                             <option value="Soft Skills">Soft Skills</option>
@@ -52,6 +52,12 @@
                         <button type="submit" class="btn btn-primary" id="addModuleBtn">Add Module</button>
                     </div>
                 </form>
+                @if (session('error'))
+                    <div class="alert alert-danger">
+                        {{ session('error') }}
+                    </div>
+                @endif
+
             </div>
         </div>
     </div>
