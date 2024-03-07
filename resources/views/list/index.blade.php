@@ -1,11 +1,6 @@
 @extends('layouts.main')
 
 @section('content')
-@if (session('error'))
-                    <div class="alert alert-danger">
-                        {{ session('error') }}
-                    </div>
-                @endif
     <section class="section" id="home">
         <div class="container text-center">
             <h6 class="display-4">List e-Module</h6>
