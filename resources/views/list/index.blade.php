@@ -45,9 +45,10 @@
                             <th style="display: none;">Id.</th>
                             <th class="text-center">Category</th>
                             <th class="text-center">Sub-category</th>
-                            <th class="text-center">Title</th>
+                            <th class="text-center">Courses</th>
                             <th class="text-center">Status</th>
                             <th class="text-center">Link</th>
+                            <th class="text-center">Video</th>
                             <th class="text-center">Action</th>
                         </tr>
                     </thead>
@@ -60,8 +61,9 @@
                             <td>{{ $list->title }}</td>
                             <td>{{ $list->status }}</td>
                             <td><a href="{{ $list->link }}" target="_blank">Click Here</a></td>
+                            <td>{{ $list->video }}</td>
                             <td>
-                                <button class="btn btn-primary ml-2 btn-edit" data-toggle="modal" data-target="#editModuleModal" data-id="{{ $list->id }}" data-title="{{ $list->title }}" data-category="{{ $list->category }}" data-subcategory="{{ $list->sub_cat }}" data-link="{{ $list->link }}" data-status="{{ $list->status }}">Edit</button>
+                                <button class="btn btn-primary ml-2 btn-edit" data-toggle="modal" data-target="#editModuleModal" data-id="{{ $list->id }}" data-title="{{ $list->title }}" data-category="{{ $list->category }}" data-subcategory="{{ $list->sub_cat }}" data-link="{{ $list->link }}" data-video="{{ $list->video }}"data-status="{{ $list->status }}">Edit</button>
                                 <button type="button" class="btn btn-primary ml-2 btn-delete" data-id="{{ $list->id }}" data-title="{{ $list->title }}">
                                 Delete
                                 </button>
@@ -108,7 +110,7 @@
                         extend: 'excelHtml5',
                         text: 'Export to Excel',
                         exportOptions: {
-                            columns: [1, 2, 3, 4, 5]
+                            columns: [1, 2, 3, 4, 5, 6]
                         }
                     }
                 ],
@@ -122,6 +124,7 @@
                 var category = $(this).data('category');
                 var subcategory = $(this).data('subcategory');
                 var link = $(this).data('link');
+                var video = $(this).data('video');
                 var status = $(this).data('status');
 
                 // Isi nilai input pada modal edit dengan data yang sesuai
@@ -130,6 +133,7 @@
                 $('#editCategory').val(category);
                 $('#editSubcategory').val(subcategory);
                 $('#editLink').val(link);
+                $('#editVideo').val(video);
                 $('#editStatus').val(status);
             });
 

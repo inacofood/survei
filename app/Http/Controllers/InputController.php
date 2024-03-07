@@ -11,11 +11,13 @@ class InputController extends Controller
     public function addNewModule(Request $request)
     {
         // Validasi input
+        // dd($request);
         $request->validate([
             'title' => 'required|string',
-            'category' => 'required|string',
+            'category' => 'required|string|in:Hard Skills, Soft Skills, Technical Skills',
             'subcategory' => 'required|string',
             'link' => 'required|string',
+            'video' => 'required|integer',
             'status' => 'required|string|in:Review,Published,Takedown',
         ]);
 
@@ -26,6 +28,7 @@ class InputController extends Controller
             $item->category = $request->category;
             $item->sub_cat = $request->subcategory;
             $item->link = $request->link;
+            $item->video = $request->video;
             $item->status = $request->status;
             $item->save();
 
@@ -64,14 +67,15 @@ class InputController extends Controller
                     $title = $worksheet->getCellByColumnAndRow(3, $row)->getValue();
                     $status = $worksheet->getCellByColumnAndRow(4, $row)->getValue();
                     $link = $worksheet->getCellByColumnAndRow(5, $row)->getValue();
+                    $video = $worksheet->getCellByColumnAndRow(6, $row)->getValue();
 
                     // Check if row is empty
-                    $rowData = [$category, $subcategory, $title, $status, $link];
+                    $rowData = [$category, $subcategory, $title, $status, $link, $video];
 
                     if (array_filter($rowData))
                     {
                         // Manual validation
-                        if (!empty($category) && !empty($subcategory) && !empty($title) && !empty($status) && !empty($link))
+                        if (!empty($category) && !empty($subcategory) && !empty($title) && !empty($status) && !empty($link) && !empty($video))
                         {
                             if (in_array($status, ['Review', 'Published', 'Takedown']))
                             {
@@ -82,6 +86,7 @@ class InputController extends Controller
                                 $item->title = $title;
                                 $item->status = $status;
                                 $item->link = $link;
+                                $item->video = $request->video;
                                 $item->save();
                             } else {
                                 return back()->with('error', 'Invalid status at row ' . $row);

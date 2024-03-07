@@ -15,6 +15,7 @@ class ListLink extends Model
         'sub_cat',
         'title',
         'link',
+        'video',
         'status',
         'created_at',
         'updated_at',
