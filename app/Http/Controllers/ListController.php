@@ -35,15 +35,6 @@ class ListController extends Controller
 
     public function updateData(Request $request)
     {
-        // Validasi permintaan
-        $request->validate([
-            'title' => 'required',
-            'category' => 'required',
-            'subcategory' => 'required',
-            'link' => 'required',
-            'video' => 'required',
-            'status' => 'required',
-        ]);
 
         // Ambil data dari permintaan
         $itemId = $request->id;
@@ -57,19 +48,25 @@ class ListController extends Controller
         // Lakukan pembaruan status di database sesuai dengan $itemId
         $item = ListLink::find($itemId);
         if (!$item) {
-            return redirect()->back()->with('error', 'Item not found.');
+            toastr()->error('Data Tidak Ditemukan');
+            return redirect()->back()->withErrors([
+                'error' => 'Data Tidak Ditemukan'
+            ]);
         }
-        $item->title = $newTitle;
-        $item->category = $newCategory;
-        $item->sub_cat = $newSubCategory;
-        $item->link = $newLink;
-        $item->video = $newVideo;
-        $item->status = $newStatus;
-        $item->save();
+            $item->title = $newTitle;
+            $item->category = $newCategory;
+            $item->sub_cat = $newSubCategory;
+            $item->link = $newLink;
+            $item->video = $newVideo;
+            $item->status = $newStatus;
+            $item->save();
 
-        // Kirim respons ke klien
-        return redirect()->back()->with('success', 'Data updated successfully.');
-
+            // Kirim respons ke klien
+            toastr()->success('Data Berhasil Di Update');
+            return redirect()->to('/')->with('message', [
+                'type'  =>  'success',
+                'msg'   =>  'Berhasil'
+            ]);
 
     }
 
@@ -79,9 +76,16 @@ class ListController extends Controller
             $item = ListLink::findOrFail($id);
             $item->delete();
 
-            return redirect()->back()->with('success', 'Item deleted successfully');
+            toastr()->success('Data Berhasil Di Delete');
+            return redirect()->to('/')->with('message', [
+                'type'  =>  'success',
+                'msg'   =>  'Berhasil'
+            ]);
         } catch (\Exception $e) {
-            return redirect()->back()->with('error', 'Failed to delete item: ' . $e->getMessage());
+            toastr()->error('Data Gagal Di Delete');
+            return redirect()->back()->withErrors([
+                'error' => 'Data Gagal Di Delete'
+            ]);
         }
     }
 
@@ -90,7 +94,6 @@ class ListController extends Controller
     {
         return Excel::download(new ListLinksExport, 'list_links.xlsx');
     }
-
 
 }
 

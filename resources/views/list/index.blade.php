@@ -92,11 +92,11 @@
             var errorMessage = "{{ session('error') }}";
 
             if (successMessage) {
-                alert(successMessage);
+                toastr.success(successMessage);
             }
 
             if (errorMessage) {
-                alert(errorMessage);
+                toastr.error(errorMessage);
             }
 
             var table = $('#dttable').DataTable({
@@ -149,11 +149,11 @@
                             _method: "DELETE"
                         },
                         success: function(response) {
-                            alert('Item deleted successfully');
-                            window.location.reload(); // Example: reloading the page after successful deletion
+                            window.location.reload();
+                            toastr.success(successMessage);
                         },
                         error: function(xhr) {
-                            alert('Failed to delete item: ' + xhr.responseText);
+                            toastr.error(errorMessage + xhr.responseText);
                         }
                     });
                 }

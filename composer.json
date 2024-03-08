@@ -16,7 +16,8 @@
         "laravel/tinker": "^2.5",
         "maatwebsite/excel": "^3.1",
         "phpoffice/phpspreadsheet": "^1.12",
-        "realrashid/sweet-alert": "^7.1"
+        "realrashid/sweet-alert": "^7.1",
+        "yoeunes/toastr": "^2.3"
     },
     "require-dev": {
         "facade/ignition": "^2.0",

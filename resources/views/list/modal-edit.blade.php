@@ -13,37 +13,31 @@
                     <input type="hidden" id="editItemId" name="id">
                     <div class="form-group">
                         <label for="editTitle">Courses:</label>
-                        <input type="text" class="form-control" id="editTitle" name="title" placeholder="Enter courses">
+                        <input type="text" class="form-control" id="editTitle" name="title" placeholder="Enter courses" required>
                     </div>
                     <div class="form-group">
                         <label for="editCategory">Category:</label>
-                        <select id="editCategory" name="category" class="form-control" aria-placeholder="">
+                        <select id="editCategory" name="category" class="form-control" aria-placeholder="" required>
                             <option value="Hard Skills">Hard Skills</option>
                             <option value="Soft Skills">Soft Skills</option>
                             <option value="Technical Skills">Technical Skills</option>
                         </select>
                     </div>
-
-                    <!-- <div class="form-group">
-                        <label for="editCategory">Category:</label>
-                        <input type="text" class="form-control" id="editCategory" name="category" placeholder="Enter category">
-                    </div> -->
-
                     <div class="form-group">
                         <label for="editSubcategory">Sub-category:</label>
-                        <input type="text" class="form-control" id="editSubcategory" name="subcategory" placeholder="Enter Sub-category">
+                        <input type="text" class="form-control" id="editSubcategory" name="subcategory" placeholder="Enter Sub-category" required>
                     </div>
                     <div class="form-group">
                         <label for="editLink">Link:</label>
-                        <input type="text" class="form-control" id="editLink"name="link"  placeholder="Enter link">
+                        <input type="text" class="form-control" id="editLink"name="link"  placeholder="Enter link" required>
                     </div>
                     <div class="form-group">
                         <label for="editVideo">Video:</label>
-                        <input type="number" class="form-control" id="editVideo" name="video" placeholder="Enter video">
+                        <input type="number" class="form-control" id="editVideo" name="video" placeholder="Enter video" required>
                     </div>
                     <div class="form-group">
                         <label for="editStatus">Status:</label>
-                        <select id="editStatus" class="form-control" name="status" aria-placeholder="">
+                        <select id="editStatus" class="form-control" name="status" aria-placeholder="" required>
                             <option value="Review">Review</option>
                             <option value="Published">Published</option>
                             <option value="Takedown">Takedown</option>
