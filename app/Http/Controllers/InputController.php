@@ -31,22 +31,12 @@ class InputController extends Controller
         $item->link = $link;
         $item->video = $video;
         $item->status = $status;
-
-        // Menyimpan data ke dalam database
         $item->save();
 
-        // Kembali ke view dengan pesan sukses
-        toastr()->success('Data Berhasil Di Input');
-        return redirect()->to('/')->with('message', [
-            'type'  =>  'success',
-            'msg'   =>  'Berhasil'
-        ]);
+        return back()->with('success', 'Data Berhasil Di Input ');
     } catch (\Exception $e) {
         // Jika terjadi error, kembali ke view dengan pesan error
-        toastr()->error('Data Gagal Di Input: ' . $e->getMessage());
-        return redirect()->back()->withErrors([
-            'error' => 'Data Gagal Di Input: ' . $e->getMessage()
-        ]);
+        return back()->with('error', 'Data Berhasil Di Input '. $e->getMessage());
     }
 
 }
@@ -123,17 +113,8 @@ class InputController extends Controller
             } else {
                 return back()->with('error', 'No valid file uploaded.');
             }
-
-            toastr()->success('Data Berhasil Di Import');
-            return redirect()->to('/')->with('message', [
-                'type'  =>  'success',
-                'msg'   =>  'Berhasil'
-            ]);
         } catch (\Exception $e) {
-            toastr()->error('Gagal mengimport data: ' . $e->getMessage());
-            return redirect()->back()->withErrors([
-                'error' => 'Gagal mengimport data: ' . $e->getMessage()
-            ]);
+            return back()->with('error', 'No valid file uploaded.');
         }
     }
 }

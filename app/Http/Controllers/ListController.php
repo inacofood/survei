@@ -48,10 +48,7 @@ class ListController extends Controller
         // Lakukan pembaruan status di database sesuai dengan $itemId
         $item = ListLink::find($itemId);
         if (!$item) {
-            toastr()->error('Data Tidak Ditemukan');
-            return redirect()->back()->withErrors([
-                'error' => 'Data Tidak Ditemukan'
-            ]);
+            return back()->with('error', 'Data Tidak Ditemukan');
         }
             $item->title = $newTitle;
             $item->category = $newCategory;
@@ -62,11 +59,7 @@ class ListController extends Controller
             $item->save();
 
             // Kirim respons ke klien
-            toastr()->success('Data Berhasil Di Update');
-            return redirect()->to('/')->with('message', [
-                'type'  =>  'success',
-                'msg'   =>  'Berhasil'
-            ]);
+            return back()->with('success', 'Data Berhasil di Update');
 
     }
 
@@ -76,16 +69,9 @@ class ListController extends Controller
             $item = ListLink::findOrFail($id);
             $item->delete();
 
-            toastr()->success('Data Berhasil Di Delete');
-            return redirect()->to('/')->with('message', [
-                'type'  =>  'success',
-                'msg'   =>  'Berhasil'
-            ]);
+            return back()->with('success', 'Data Berhasil di Delete');
         } catch (\Exception $e) {
-            toastr()->error('Data Gagal Di Delete');
-            return redirect()->back()->withErrors([
-                'error' => 'Data Gagal Di Delete'
-            ]);
+            return back()->with('error', 'Data Gagal di Delete');
         }
     }
 
