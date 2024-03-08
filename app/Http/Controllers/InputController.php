@@ -13,12 +13,12 @@ class InputController extends Controller
         // Validasi input
         // dd($request);
         $request->validate([
-            'title' => 'required|string',
-            'category' => 'required|string|in:Hard Skills, Soft Skills, Technical Skills',
-            'subcategory' => 'required|string',
-            'link' => 'required|string',
-            'video' => 'required|integer',
-            'status' => 'required|string|in:Review,Published,Takedown',
+            'title' => 'required',
+            'category' => 'required',
+            'subcategory' => 'required',
+            'link' => 'required',
+            'video' => 'required',
+            'status' => 'required',
         ]);
 
         // Simpan data ke dalam database
@@ -41,7 +41,7 @@ class InputController extends Controller
     }
 
     public function Download() {
-        $file_name = "template_Import_emodule.xlsx";
+        $file_name = "template_import_emodule.xlsx";
         $file_path = public_path($file_name);
         return response()->download($file_path);
     }
@@ -77,19 +77,28 @@ class InputController extends Controller
                         // Manual validation
                         if (!empty($category) && !empty($subcategory) && !empty($title) && !empty($status) && !empty($link) && !empty($video))
                         {
-                            if (in_array($status, ['Review', 'Published', 'Takedown']))
+                            if (in_array($category, ['Hard Skills', 'Soft Skills', 'Technical Skills']))
                             {
-                                // Simpan data ke dalam database
-                                $item = new ListLink();
-                                $item->category = $category;
-                                $item->sub_cat = $subcategory;
-                                $item->title = $title;
-                                $item->status = $status;
-                                $item->link = $link;
-                                $item->video = $request->video;
-                                $item->save();
+                                if (in_array($status, ['Review', 'Published', 'Takedown']))
+                                {
+                                    if (is_int($video))
+                                    {
+                                        $item = new ListLink();
+                                        $item->category = $category;
+                                        $item->sub_cat = $subcategory;
+                                        $item->title = $title;
+                                        $item->status = $status;
+                                        $item->link = $link;
+                                        $item->video = $video;
+                                        $item->save();
+                                    } else {
+                                        return back()->with('error', 'Video must be a number at row ' . $row);
+                                    }
+                                } else {
+                                    return back()->with('error', 'Invalid status at row ' . $row);
+                                }
                             } else {
-                                return back()->with('error', 'Invalid status at row ' . $row);
+                                return back()->with('error', 'Invalid category at row ' . $row);
                             }
                         } else {
                             return back()->with('error', 'Missing data at row ' . $row);

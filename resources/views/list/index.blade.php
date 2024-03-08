@@ -1,7 +1,6 @@
 @extends('layouts.main')
 
 @section('content')
-
     <section class="section" id="home">
         <div class="container text-center">
             <h6 class="display-4">List e-Module</h6>
