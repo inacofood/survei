@@ -12,36 +12,33 @@
                 @csrf
                     <div class="form-group">
                         <label for="newTitle">Courses</label>
-                        <input type="text" class="form-control" id="newTitle" name="title" placeholder="Enter courses">
+                        <input type="text" class="form-control" id="newTitle" name="title" placeholder="Enter courses" required>
                     </div>
                     <div class="form-group">
                         <label for="newcategory">Category</label>
-                        <select id="newCategory" name="category" class="form-control">
+                        <select id="newCategory" name="category" class="form-control" required>
+                            <option value="" selected disabled>Choose</option>
                             <option value="Hard Skills">Hard Skills</option>
                             <option value="Soft Skills">Soft Skills</option>
                             <option value="Technical Skills">Technical Skills</option>
                         </select>
                     </div>
-                    <!-- <div class="form-group">
-                        <label for="newcategory">Category</label>
-                        <input type="text" class="form-control" id="newcategory" name="category" placeholder="Enter category">
-                    </div> -->
-
                     <div class="form-group">
                         <label for="newSubcategory">Sub-category</label>
-                        <input type="text" class="form-control" id="newSubcategory" name="subcategory" placeholder="Enter Sub-category">
+                        <input type="text" class="form-control" id="newSubcategory" name="subcategory" placeholder="Enter Sub-category" required>
                     </div>
                     <div class="form-group">
                         <label for="newLink">Link</label>
-                        <input type="text" class="form-control" id="newLink" name="link" placeholder="Enter link">
+                        <input type="text" class="form-control" id="newLink" name="link" placeholder="Enter link" required>
                     </div>
                     <div class="form-group">
                         <label for="newVideo">Video</label>
-                        <input type="number" class="form-control" id="newVideo" name="video" placeholder="Enter video">
+                        <input type="number" class="form-control" id="newVideo" name="video" placeholder="Enter video" required>
                     </div>
                     <div class="form-group">
                         <label for="newStatus">Status</label>
-                        <select id="newStatus" name="status" class="form-control">
+                        <select id="newStatus" name="status" class="form-control" required>
+                            <option value="" selected disabled>Choose</option>
                             <option value="Review">Review</option>
                             <option value="Published">Published</option>
                             <option value="Takedown">Takedown</option>
@@ -52,12 +49,6 @@
                         <button type="submit" class="btn btn-primary" id="addModuleBtn">Add Module</button>
                     </div>
                 </form>
-                @if (session('error'))
-                    <div class="alert alert-danger">
-                        {{ session('error') }}
-                    </div>
-                @endif
-
             </div>
         </div>
     </div>

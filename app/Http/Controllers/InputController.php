@@ -6,39 +6,41 @@ use Illuminate\Http\Request;
 use App\Models\ListLink;
 use PhpOffice\PhpSpreadsheet\IOFactory; // Masukkan ini di bagian atas class
 
+
 class InputController extends Controller
 {
     public function addNewModule(Request $request)
-    {
-        // Validasi input
-        // dd($request);
-        $request->validate([
-            'title' => 'required',
-            'category' => 'required',
-            'subcategory' => 'required',
-            'link' => 'required',
-            'video' => 'required',
-            'status' => 'required',
-        ]);
+{
+    // Mengambil data dari request
+    $title = $request->title;
+    $category = $request->category;
+    $subcategory = $request->subcategory;
+    $link = $request->link;
+    $video = $request->video;
+    $status = $request->status;
 
-        // Simpan data ke dalam database
-        try {
-            $item = new ListLink();
-            $item->title = $request->title;
-            $item->category = $request->category;
-            $item->sub_cat = $request->subcategory;
-            $item->link = $request->link;
-            $item->video = $request->video;
-            $item->status = $request->status;
-            $item->save();
+    // Memeriksa apakah semua input yang diperlukan telah disediakan
+    try {
+        // Membuat instance baru dari ListLink
+        $item = new ListLink();
 
-            // Kembali ke view dengan pesan sukses
-            return redirect()->back()->with('success', 'New module added successfully.');
-        } catch (\Exception $e) {
-            // Jika terjadi error, kembali ke view dengan pesan error
-            return back()->with('error', 'Failed to Add New Module.');
-        }
+        // Mengisi properti-properti dari instance
+        $item->title = $title;
+        $item->category = $category;
+        $item->sub_cat = $subcategory;
+        $item->link = $link;
+        $item->video = $video;
+        $item->status = $status;
+        $item->save();
+
+        return back()->with('success', 'Data Berhasil Di Input ');
+    } catch (\Exception $e) {
+        // Jika terjadi error, kembali ke view dengan pesan error
+        return back()->with('error', 'Data Berhasil Di Input '. $e->getMessage());
     }
+
+}
+
 
     public function Download() {
         $file_name = "template_import_emodule.xlsx";
@@ -112,7 +114,7 @@ class InputController extends Controller
                 return back()->with('error', 'No valid file uploaded.');
             }
         } catch (\Exception $e) {
-            return back()->with('error', 'Failed to import data: ' . $e->getMessage());
+            return back()->with('error', 'No valid file uploaded.');
         }
     }
 }
