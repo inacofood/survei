@@ -18,7 +18,7 @@
                         <label for="newcategory">Category</label>
                         <select id="newCategory" name="category" class="form-control" required>
                             <option value="" selected disabled>Choose</option>
-                            <option value="Hard Skills">Hard Skills</option>
+                            <option value="Basic Skills">Basic Skills</option>
                             <option value="Soft Skills">Soft Skills</option>
                             <option value="Technical Skills">Technical Skills</option>
                         </select>
@@ -41,7 +41,6 @@
                             <option value="" selected disabled>Choose</option>
                             <option value="Review">Review</option>
                             <option value="Published">Published</option>
-                            <option value="Takedown">Takedown</option>
                         </select>
                     </div>
                     <div class="modal-footer">

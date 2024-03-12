@@ -18,7 +18,7 @@
                     <div class="form-group">
                         <label for="editCategory">Category:</label>
                         <select id="editCategory" name="category" class="form-control" aria-placeholder="" required>
-                            <option value="Hard Skills">Hard Skills</option>
+                            <option value="Basic Skills">Basic Skills</option>
                             <option value="Soft Skills">Soft Skills</option>
                             <option value="Technical Skills">Technical Skills</option>
                         </select>
@@ -40,7 +40,6 @@
                         <select id="editStatus" class="form-control" name="status" aria-placeholder="" required>
                             <option value="Review">Review</option>
                             <option value="Published">Published</option>
-                            <option value="Takedown">Takedown</option>
                         </select>
                     </div>
                     <div class="modal-footer">

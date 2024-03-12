@@ -79,9 +79,9 @@ class InputController extends Controller
                         // Manual validation
                         if (!empty($category) && !empty($subcategory) && !empty($title) && !empty($status) && !empty($link) && !empty($video))
                         {
-                            if (in_array($category, ['Hard Skills', 'Soft Skills', 'Technical Skills']))
+                            if (in_array($category, ['Basic Skills', 'Soft Skills', 'Technical Skills']))
                             {
-                                if (in_array($status, ['Review', 'Published', 'Takedown']))
+                                if (in_array($status, ['Review', 'Published']))
                                 {
                                     if (is_int($video))
                                     {
