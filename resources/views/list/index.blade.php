@@ -136,7 +136,7 @@
                 $('#editStatus').val(status);
             });
 
-            $('.btn-delete').click(function() {
+            $(document).on('click', '.btn-delete', function() {
                 var itemId = $(this).data('id');
                 var itemTitle = $(this).data('title');
                 if (confirm("Are you sure you want to delete " + itemTitle + "?")) {
@@ -158,7 +158,6 @@
                     });
                 }
             });
-
             // // Menambahkan dropdown filter untuk kolom sub-category
             // $('#FilterCat').on('change', function() {
             //     var selectedSubcat = $(this).val();

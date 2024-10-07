@@ -3,7 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ListController;
-
+use App\Http\Controllers\CcisController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -34,4 +34,5 @@ Route::get('/export-list-links', 'ListController@export')->name('export');
 Route::get('/get-modal-data', 'ListController@getModalData');
 Route::delete('/delete/{id}', 'ListController@deleteData')->name('delete');
 Route::get('/download', 'InputController@Download');
+Route::get('/ccis', [CcisController::class, 'index'])->name('ccis');
 
