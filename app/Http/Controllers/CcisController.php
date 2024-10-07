@@ -14,6 +14,7 @@ use PhpOffice\PhpSpreadsheet\IOFactory;
 class CcisController extends Controller{
 
     public function index(){
+
         $departments = Departments::all();
         return view('ccis', compact('departments'));
     }
