@@ -4,24 +4,16 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\ListLink;
-<<<<<<< HEAD
-=======
 use App\Models\Kategori_ocai;
 use App\Models\Title_ocai;
 use App\Models\Nilai_ocai;
 use App\Models\Departments;
->>>>>>> e10d5d9a037c4314d5c8a398cab2c44409d24ebf
 use PhpOffice\PhpSpreadsheet\IOFactory;
 
 
 class CcisController extends Controller{
 
     public function index(){
-<<<<<<< HEAD
-        return view('ccis');
-    }
-
-=======
         $departments = Departments::all();
         return view('ccis', compact('departments'));
     }
@@ -187,5 +179,4 @@ class CcisController extends Controller{
         return redirect()->back()->with('success', 'Data berhasil disimpan!');
     }
 
->>>>>>> e10d5d9a037c4314d5c8a398cab2c44409d24ebf
 }
