@@ -15,7 +15,7 @@ class AuthController extends Controller
     public function login(Request $request)
     {
         $credentials = $request->only('email', 'password');
-
+// dd($credentials);
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
             // Jika autentikasi berhasil, redirect ke halaman yang sesuai

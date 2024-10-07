@@ -75,13 +75,8 @@ class ListController extends Controller
         }
     }
 
-
     public function export()
     {
         return Excel::download(new ListLinksExport, 'list_links.xlsx');
     }
-
 }
-
-
-
