@@ -3,6 +3,8 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ListController;
+use App\Http\Controllers\CcisController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -34,4 +36,19 @@ Route::get('/export-list-links', 'ListController@export')->name('export');
 Route::get('/get-modal-data', 'ListController@getModalData');
 Route::delete('/delete/{id}', 'ListController@deleteData')->name('delete');
 Route::get('/download', 'InputController@Download');
+
+Route::get('/ocai', [CcisController::class, 'index'])->name('ccis');
+Route::get('/kategori', [CcisController::class, 'indexkategori'])->name('kategori.index');
+Route::post('/kategori', [CcisController::class, 'store'])->name('kategori.store');
+Route::get('/kategori/{id}/edit', [CcisController::class, 'edit'])->name('kategori.edit'); 
+Route::put('/kategori/{id}', [CcisController::class, 'update'])->name('kategori.update');
+Route::delete('/kategori/{id}', [CcisController::class, 'destroy'])->name('kategori.destroy');
+Route::get('/title', [CcisController::class, 'indextitle'])->name('title.index');
+Route::post('/title', [CcisController::class, 'storetitle'])->name('title.store');
+Route::get('/title/{id}/edit', [CcisController::class, 'edittitle'])->name('title.edit'); 
+Route::put('/title/{id}', [CcisController::class, 'updatetitle'])->name('title.update');
+Route::delete('/title/{id}', [CcisController::class, 'destroytitle'])->name('title.destroy');
+Route::post('/ocai-store', [CcisController::class, 'ocaistore'])->name('ocai.store');
+Route::get('/ocai-index', [CcisController::class, 'ocaiindex'])->name('ocai.index');
+
 

@@ -14,6 +14,13 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
+    <a class="nav-link btn btn-primary text-dark shadow-none ml-md-4" href="{{ route('ocai.index') }}">
+        OCAI
+    </a>
+</li>
+
+
+                <li class="nav-item">
                     <form id="logout" action="/logout" method="POST">
                         @csrf
                         <a class="nav-link btn btn-primary text-dark shadow-none ml-md-4" href="javascript:;"
