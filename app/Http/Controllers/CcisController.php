@@ -15,12 +15,12 @@ use PhpOffice\PhpSpreadsheet\IOFactory;
 
 
 class CcisController extends Controller{
-  
+
     public function index(){
 <<<<<<< HEAD
         return view('ccis');
     }
-    
+
 =======
         $departments = Departments::all();
         return view('ccis', compact('departments'));
@@ -28,7 +28,7 @@ class CcisController extends Controller{
 
     public function indexkategori()
     {
-        $categories = Kategori_ocai::all(); 
+        $categories = Kategori_ocai::all();
         return view('ocai', compact('categories'));
     }
 
@@ -48,7 +48,7 @@ class CcisController extends Controller{
     public function edit($id)
     {
         $category = Kategori_ocai::findOrFail($id);
-        return response()->json($category); 
+        return response()->json($category);
     }
 
 
@@ -68,7 +68,7 @@ class CcisController extends Controller{
     } catch (\Exception $e) {
         return redirect()->route('kategori.index')->with('error', 'Terjadi kesalahan saat memperbarui kategori');
     }
-    }   
+    }
 
     public function destroy($id)
     {
@@ -81,8 +81,8 @@ class CcisController extends Controller{
     public function indextitle()
     {
     $kategori = Kategori_ocai::all();
-    $title = Title_ocai::all(); 
-    
+    $title = Title_ocai::all();
+
     return view('title', compact('title', 'kategori'));
     }
 
@@ -93,20 +93,20 @@ class CcisController extends Controller{
             'nama_title' => 'required|string|max:255',
             'id_kategori' => 'required|integer',
         ]);
-    
+
         Title_ocai::create([
             'nama_title' => $request->nama_title,
             'id_kategori' => $request->id_kategori,
         ]);
-    
+
         return redirect()->route('title.index')->with('success', 'Title berhasil ditambahkan!');
     }
-    
-    
+
+
     public function edittitle($id)
     {
         $title = Title_ocai::findOrFail($id);
-        return response()->json($title); 
+        return response()->json($title);
     }
 
 
@@ -126,7 +126,7 @@ class CcisController extends Controller{
     } catch (\Exception $e) {
         return redirect()->route('title.index')->with('error', 'Terjadi kesalahan saat memperbarui title');
     }
-    }   
+    }
 
     public function destroytitle($id)
     {
@@ -138,7 +138,7 @@ class CcisController extends Controller{
 
     public function ocaiindex()
     {
-        $nilaiOcai = Nilai_ocai::all(); 
+        $nilaiOcai = Nilai_ocai::all();
         foreach ($nilaiOcai as $nilai) {
             $nilai->nilai_saat_ini = json_decode($nilai->nilai_saat_ini, true);
             $nilai->nilai_ideal = json_decode($nilai->nilai_ideal, true);
@@ -146,13 +146,13 @@ class CcisController extends Controller{
             $nilai->department = $caridepart->department_name;
             $carikategori = Kategori_ocai::where('id_kategori',$nilai->id_kategori)->first();
             $nilai->id_kategori = $carikategori->nama_kategori;
-            
+
 
         }
         // dd($nilaiOcai);
         return view('nilaiocai', compact('nilaiOcai'));
     }
-    
+
 
     public function ocaistore(Request $request)
     {
@@ -179,8 +179,8 @@ class CcisController extends Controller{
                 'nama' => $request->input('nama'),
                 'department' => $request->input('department'),
                 'id_kategori' => $idTitle,
-                'nilai_saat_ini' => json_encode($nilaiSaatIni),  
-                'nilai_ideal' => json_encode($nilaiIdeal),    
+                'nilai_saat_ini' => json_encode($nilaiSaatIni),
+                'nilai_ideal' => json_encode($nilaiIdeal),
             ]);
         }
 
