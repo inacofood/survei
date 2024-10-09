@@ -21,5 +21,12 @@ class Nilai_ocai extends Model
         return $this->belongsTo(Departments::class, 'department', 'id'); 
     }
 
+    public function kategori()
+    {
+        return $this->belongsTo(Kategori_ocai::class, 'id_kategori', 'id_kategori');
+    }
+
     
 }
+    
+

@@ -8,6 +8,8 @@ use App\Models\Kategori_ocai;
 use App\Models\Title_ocai;
 use App\Models\Nilai_ocai;
 use App\Models\Departments;
+use App\Exports\NilaiOcaiExport;
+use Maatwebsite\Excel\Facades\Excel; 
 use PhpOffice\PhpSpreadsheet\IOFactory;
 
 
@@ -35,116 +37,113 @@ class CcisController extends Controller{
             'nama_kategori' => $request->nama_kategori,
         ]);
 
-        return redirect()->route('kategori.index')->with('success', 'Kategori berhasil ditambahkan');
+        return redirect()->route('kategori.index')->with('success', 'Kategori berhasil ditambahkan!');
     }
 
     public function edit($id)
-    {
+    { 
         $category = Kategori_ocai::findOrFail($id);
         return response()->json($category);
     }
-
-
+    
     public function update(Request $request, $id)
     {
-    $request->validate([
-        'nama_kategori' => 'required|string|max:255',
-    ]);
-
-    try {
-        $category = Kategori_ocai::findOrFail($id);
-        $category->update([
-            'nama_kategori' => $request->nama_kategori,
-        ]);
-
-        return redirect()->route('kategori.index')->with('success', 'Kategori berhasil diperbarui');
-    } catch (\Exception $e) {
-        return redirect()->route('kategori.index')->with('error', 'Terjadi kesalahan saat memperbarui kategori');
-    }
+        $kategori = Kategori_ocai::findOrFail($id); 
+        $kategori->nama_kategori = $request->nama_kategori;
+        $kategori->save();
+    
+        return redirect()->route('kategori.index')->with('success', 'Kategori berhasil diperbarui!');
     }
 
-    public function destroy($id)
+    }
+
+
+    public function destroy(Request $request)
     {
-        $category = Kategori_ocai::findOrFail($id);
-        $category->delete();
+    
+        $kategori = Kategori_ocai::findOrFail($request->id);
+        $kategori->delete();
 
-        return redirect()->route('kategori.index')->with('success', 'Kategori berhasil dihapus');
+       
+        return redirect()->back()->with('success', 'Kategori berhasil dihapus!');
     }
 
     public function indextitle()
     {
-    $kategori = Kategori_ocai::all();
-    $title = Title_ocai::all();
 
-    return view('title', compact('title', 'kategori'));
+        $kategori = Kategori_ocai::all();
+        $title = Title_ocai::with('kategori')->get(); 
+        
+        return view('title', compact('title', 'kategori'));
+
     }
-
 
     public function storetitle(Request $request)
     {
         $request->validate([
             'nama_title' => 'required|string|max:255',
-            'id_kategori' => 'required|integer',
+            'id_kategori' => 'required|integer', // Ubah id_kategori menjadi kategori_id
         ]);
 
         Title_ocai::create([
             'nama_title' => $request->nama_title,
-            'id_kategori' => $request->id_kategori,
+            'id_kategori' => $request->id_kategori, // Ubah id_kategori menjadi kategori_id
         ]);
+
+
+        return redirect()->back()->with('success', 'Item berhasil disimpan!');
+    }
+
+    
+    public function edittitle($id)
+    {
+        $title = Title_ocai::find($id);
+        if ($title) {
+            return response()->json($title);
+        } else {
+            return response()->json(['message' => 'Title tidak ditemukan'], 404);
+        }
 
         return redirect()->route('title.index')->with('success', 'Title berhasil ditambahkan!');
     }
 
-
-    public function edittitle($id)
+    
+    public function updatetitle(Request $request)
     {
-        $title = Title_ocai::findOrFail($id);
-        return response()->json($title);
+        $title = Title_ocai::findOrFail($request->id_title);
+        $title->nama_title = $request->nama_title;
+        $title->id_kategori = $request->id_kategori;
+        $title->save();
+    
+        return redirect()->back()->with('success', 'Item berhasil diperbaharui!');
     }
 
 
-    public function updatetitle(Request $request, $id)
+    public function destroytitle(Request $request)
     {
-    $request->validate([
-        'nama_title' => 'required|string|max:255',
-    ]);
-
-    try {
-        $title = Title_ocai::findOrFail($id);
-        $title->update([
-            'nama_title' => $request->nama_title,
-        ]);
-
-        return redirect()->route('title.index')->with('success', 'title berhasil diperbarui');
-    } catch (\Exception $e) {
-        return redirect()->route('title.index')->with('error', 'Terjadi kesalahan saat memperbarui title');
-    }
-    }
-
-    public function destroytitle($id)
-    {
-        $title= Title_ocai::findOrFail($id);
+    
+        $title = Title_ocai::findOrFail($request->id);
         $title->delete();
 
-        return redirect()->route('title.index')->with('success', 'Title berhasil dihapus');
+        return redirect()->back()->with('success', 'Item berhasil dihapus!');
     }
-
+    
+    
     public function ocaiindex()
     {
-        $nilaiOcai = Nilai_ocai::all();
+
+        $nilaiOcai = Nilai_ocai::orderBy('id_nilai', 'desc')->get(); 
         foreach ($nilaiOcai as $nilai) {
             $nilai->nilai_saat_ini = json_decode($nilai->nilai_saat_ini, true);
             $nilai->nilai_ideal = json_decode($nilai->nilai_ideal, true);
-            $caridepart = Departments::where('id',$nilai->department)->first();
-            $nilai->department = $caridepart->department_name;
-            $carikategori = Kategori_ocai::where('id_kategori',$nilai->id_kategori)->first();
-            $nilai->id_kategori = $carikategori->nama_kategori;
-
-
+            $caridepart = Departments::where('id', $nilai->department)->first();
+            $nilai->department = $caridepart ? $caridepart->department_name : 'Unknown';
+            $carikategori = Kategori_ocai::where('id_kategori', $nilai->id_kategori)->first();
+            $nilai->id_kategori = $carikategori ? $carikategori->nama_kategori : 'Unknown';
         }
-        // dd($nilaiOcai);
+    
         return view('nilaiocai', compact('nilaiOcai'));
-    }
+    }    
 
 
     public function ocaistore(Request $request)
@@ -156,7 +155,7 @@ class CcisController extends Controller{
             ->first();
 
         if ($existingEntry) {
-            return redirect()->back()->with('error', 'Data untuk nama dan department ini sudah ada dalam tahun ini.');
+            return redirect()->back()->with('error', 'Data untuk nama dan departemen ini sudah ada dalam tahun ini!');
         }
 
         for ($idTitle = 1; $idTitle <= 6; $idTitle++) {
@@ -180,4 +179,26 @@ class CcisController extends Controller{
         return redirect()->back()->with('success', 'Data berhasil disimpan!');
     }
 
+
+    public function exportocai()
+    {
+        return Excel::download(new NilaiOcaiExport, 'nilai_ocai.xlsx');
+    }
+
+    public function ocaidestroy(Request $request)
+    {
+        $nilai = Nilai_ocai::findOrFail($request->id);
+        $nama = $nilai->nama;
+        $department = $nilai->department;
+
+        Nilai_ocai::where('nama', $nama)
+                    ->where('department', $department)
+                    ->delete();
+
+        return redirect()->back()->with('success', 'Data berhasil dihapus!');
+    }
+
+
+    
 }
+

@@ -4,6 +4,9 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ListController;
 use App\Http\Controllers\CcisController;
+use App\Exports\NilaiOcaiExport;
+use Maatwebsite\Excel\Facades\Excel;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -40,13 +43,16 @@ Route::get('/kategori', [CcisController::class, 'indexkategori'])->name('kategor
 Route::post('/kategori', [CcisController::class, 'store'])->name('kategori.store');
 Route::get('/kategori/{id}/edit', [CcisController::class, 'edit'])->name('kategori.edit');
 Route::put('/kategori/{id}', [CcisController::class, 'update'])->name('kategori.update');
-Route::delete('/kategori/{id}', [CcisController::class, 'destroy'])->name('kategori.destroy');
+Route::delete('/deletekategori', [CcisController::class, 'destroy'])->name('kategori.destroy');
 Route::get('/title', [CcisController::class, 'indextitle'])->name('title.index');
 Route::post('/title', [CcisController::class, 'storetitle'])->name('title.store');
 Route::get('/title/{id}/edit', [CcisController::class, 'edittitle'])->name('title.edit');
-Route::put('/title/{id}', [CcisController::class, 'updatetitle'])->name('title.update');
-Route::delete('/title/{id}', [CcisController::class, 'destroytitle'])->name('title.destroy');
+Route::put('/titleupdate', [CcisController::class, 'updatetitle'])->name('title.update');
+Route::delete('/deletetitle', [CcisController::class, 'destroytitle'])->name('title.destroy');
 Route::post('/ocai-store', [CcisController::class, 'ocaistore'])->name('ocai.store');
 Route::get('/ocai-index', [CcisController::class, 'ocaiindex'])->name('ocai.index');
+Route::delete('/nilai-ocai', [CcisController::class, 'ocaidestroy'])->name('ocai.destroy');
+Route::get('/exportocai', [CcisController::class, 'exportocai'])->name('export.ocai');
+
 
 

@@ -1,169 +1,165 @@
 @extends('layouts.main')
+<!-- Toastr CSS -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+<!-- Toastr JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 
 @section('content')
 <section class="section" id="home">
-        <div class="container text-center">
-        <div style="text-align: center;">
+    <div class="container text-center">
         <br>
-        <h3><strong>Title OCAI</strong></h3>
-    </div>
-            <p class="has-line"></p>
-            <div class="row mt-3">
-                <div class="col-md-12 mt-3">
-                    <div class="float-right">
-                        <button class="btn btn-primary ml-1" data-toggle="modal" data-target="#addtitleModal">Tambah Title</button>
-                    </div>
+        <h3><strong>ITEM OCAI</strong></h3>
+        <p class="has-line"></p>
+        <div class="row mt-3">
+            <div class="col-md-12 mt-3">
+                <div class="float-right">
+                    <button class="btn btn-primary ml-1" data-toggle="modal" data-target="#addtitleModal">Tambah Item</button>
                 </div>
             </div>
-            <br>
-            <div class="container">
-            <table id="dttable" class="table table-striped mb-0 align-middle">
-            <thead>
-                <tr>
-                    <th class="text-center">Nama Title</th>
-                    <th class="text-center" style="width: 5%;">Action</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach($title as $title)
-                <tr>
-                <td style="max-width: 100%; white-space: normal; text-align: left;">{{ $title->nama_title }}</td>
-                    <td class="text-center">
-                        <button class="btn btn-primary ml-2 btn-edit" data-toggle="modal" data-target="#edittitleModal"
-                            data-id="{{ $title->id }}"
-                            data-nama="{{ $title->nama_title }}">Edit</button>
-                        <button class="btn btn-danger ml-2 btn-delete" data-id="{{ $title->id }}" data-nama="{{ $title->nama_title }}">Delete</button>
-                    </td>
-                </tr>
-                @endforeach
-            </tbody>
-                </table>
-            </div>
         </div>
-    </section>
+        <br>
+        <div class="container">
+            <table id="dttable" class="table table-striped mb-0 align-middle">
+                <thead>
+                    <tr>
+                        <th class="text-center">Kategori</th>
+                        <th class="text-center">Item</th>
+                        <th class="text-center" style="width: 5%;">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach($title as $title)
+                        <tr>
+                        <td style="max-width: 100%; white-space: normal; text-align: left;">
+                            {{ $title->kategori->nama_kategori ?? '-' }}
+                        </td>
 
-    <!-- Modal Tambah title -->
+                            <td style="max-width: 100%; white-space: normal; text-align: left;">{{ $title->nama_title }}</td>
+                            <td class="text-center">
+                            <button class="btn btn-primary ml-2 edit-button"  
+                data-toggle="modal" 
+                data-target="#EdittitleModal"
+                data-id="{{ $title->id_title }}"
+                data-nama="{{ $title->nama_title }}"
+                data-kategori="{{ $title->id_kategori }}">
+                Edit
+            </button>
+                                <form action="{{ route('title.destroy') }}" method="POST" style="display: inline;">
+                                @csrf
+                                @method('DELETE')
+                                <input type="hidden" name="id" value="{{$title->id_title}}">
+                                <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this item?');">
+                                    Delete
+                                </button>
+                            </form>
+                            </td>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
+
+<!-- Add title Modal -->
 <div class="modal fade" id="addtitleModal" tabindex="-1" role="dialog" aria-labelledby="addtitleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
-        <div class="modal-content">
+        <div class="modal-content" style="padding: 20px;"> 
             <div class="modal-header">
-                <h5 class="modal-title" id="addtitleModalLabel">Tambah Data title</h5>
+                <h5 class="modal-title" id="addtitleModalLabel">Tambah Data Item</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form action="{{ route('title.store') }}" method="POST">
+            <form method="POST" action="{{ route('title.store') }}">
                 @csrf
-                <div class="modal-body">
-                    <div class="form-group">
-                        <label for="nama_title">Nama title</label>
-                        <input type="text" class="form-control" id="nama_title" name="nama_title" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="id_kategori">Pilih Kategori</label>
-                        <select class="form-control" id="id_kategori" name="id_kategori" required>
-                            <option value="" disabled selected>Pilih kategori</option>
-                            @foreach($kategori as $k)
-                                <option value="{{ $k->id_kategori }}">{{ $k->nama_kategori }}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                </div>  
-                <div class="modal-footer">
+                @method('POST')
+                <input type="hidden" name="id_title">
+                <div class="form-group mt-3" style="margin-bottom: 15px;">
+                    <label for="editKategori">Kategori</label>
+                    <select class="form-control" name="id_kategori" required> <!-- Ubah kategori_id menjadi id_kategori -->
+                        @foreach($kategori as $kat)
+                            <option value="{{ $kat->id_kategori }}">{{ $kat->nama_kategori }}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="form-group mt-3" style="margin-bottom: 15px;">
+                    <label for="editNamatitle">Nama Item</label>
+                    <textarea class="form-control" name="nama_title" rows="3" required style="width: 100%; padding: 10px; margin-bottom: 15px;"></textarea> <!-- Menambahkan margin-bottom -->
+                </div>
+                <div class="modal-footer mt-4">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary">Submit</button>
+                    <button type="submit" class="btn btn-primary">Save</button>
                 </div>
             </form>
         </div>
     </div>
 </div>
 
-<!-- Modal Edit title -->
-<div class="modal fade" id="edittitleModal" tabindex="-1" role="dialog" aria-labelledby="edittitleModalLabel" aria-hidden="true">
+<!-- Modal Edit Title -->
+<div class="modal fade" id="EdittitleModal" tabindex="-1" role="dialog" aria-labelledby="EdittitleLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="edittitleModalLabel">Edit Data title</h5>
+                <h5 class="modal-title" id="EdittitleLabel">Edit Data Item</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form id="edittitleForm" method="POST" action="" class="p-3">
+            <div class="modal-body">
+            <form id="editTitleForm" method="POST" action="{{ route('title.update') }}">
                 @csrf
-                @method('PUT')
-                <input type="hidden" id="edittitleId" name="id_title">
-                <div class="form-group mt-3">
-                    <label for="editNamatitle">Nama title</label>
-                    <input type="text" class="form-control" id="editNamatitle" name="nama_title" required>
+                @method('PUT') 
+                <input type="hidden" id="id_title" name="id_title">
+                <div class="form-group">
+                    <label for="id_kategori" class="col-form-label">Kategori:</label>
+                    <select class="form-control" id="id_kategori" name="id_kategori">
+                        @foreach($kategori as $kat)
+                            <option value="{{ $kat->id_kategori }}">{{ $kat->nama_kategori }}</option>
+                        @endforeach
+                    </select>
                 </div>
-
-                <div class="modal-footer mt-4">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary">Save Changes</button>
-                </div>
+                  <div class="form-group mt-3" style="margin-bottom: 15px;">
+                        <label for="nama_title" class="col-form-label">Nama Title:</label>
+                        <textarea class="form-control" id="nama_title" name="nama_title" rows="3" required style="width: 100%; padding: 10px; margin-bottom: 15px;"></textarea> <!-- Mengubah input menjadi textarea -->
+                    </div>
             </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" id="saveChangesButton">Save changes</button>
+            </div>
         </div>
     </div>
 </div>
+
+
 @endsection
 
-
-
 @section('script')
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+
 <script>
 $(document).ready(function() {
-    // Inisialisasi Select2 dengan ID yang benar
-    $('#id_kategori').select2({
-        placeholder: 'Pilih kategori',
-        allowClear: true
+    $('.edit-button').on('click', function() {
+        var id = $(this).data('id');
+        var nama = $(this).data('nama');
+        var kategori = $(this).data('kategori');
+
+        $('#id_title').val(id);
+        $('#nama_title').val(nama);
+        $('#id_kategori').val(kategori);  
+        $('#EdittitleModal').modal('show');
     });
 
-    // Inisialisasi DataTables
-    $('#dttable').DataTable({
-        "order": [[0, 'desc']],
-    });
-
-    // Edit button click event
-    $('.btn-edit').click(function() {
-        var itemId = $(this).data('id');
-        $.get("{{ url('/title') }}" + '/' + itemId + '/edit', function(data) {
-            if (data) {
-                $('#edittitleId').val(data.id);
-                $('#editNamatitle').val(data.nama_title); 
-                $('#edittitleForm').attr('action', "{{ url('/title') }}" + '/' + itemId); 
-                $('#edittitleModal').modal('show'); 
-            } else {
-                toastr.error('Data title tidak ditemukan.');
-            }
-        }).fail(function(jqXHR, textStatus, errorThrown) {
-            toastr.error('Terjadi kesalahan saat mengambil data: ' + textStatus);
-        });
-    });
-
-    // Delete button click event
-    $('.btn-delete').click(function() {
-        var itemId = $(this).data('id');
-        var itemName = $(this).data('nama');
-        if (confirm("Are you sure you want to delete " + itemName + "?")) {
-            $.ajax({
-                url: "{{ url('/title') }}" + '/' + itemId,
-                type: "POST",
-                data: {
-                    _token: "{{ csrf_token() }}",
-                    _method: "DELETE"
-                },
-                success: function(response) {
-                    window.location.reload();
-                    toastr.success("title berhasil dihapus");
-                },
-                error: function(xhr) {
-                    toastr.error("Terjadi kesalahan: " + xhr.responseText);
-                }
-            });
-        }
+    $('#saveChangesButton').on('click', function() {
+        $('#editTitleForm').submit();
     });
 });
-
 </script>
+
 
 @endsection

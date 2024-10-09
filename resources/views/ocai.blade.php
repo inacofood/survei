@@ -20,19 +20,26 @@
             <table id="dttable" class="table table-striped mb-0 align-middle">
                     <thead>
                         <tr>
-                            <th>Nama Kategori</th>
-                            <th>Action</th>
+                            <th style="text-align: center">Nama Kategori</th>
+                            <th style="text-align: center">Action</th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach($categories as $category)
                         <tr>
-                        <td>{{ $category->nama_kategori }}</td>
+                        <td style="text-align: left">{{ $category->nama_kategori }}</td>
                         <td>
                             <button class="btn btn-primary ml-2 btn-edit" data-toggle="modal" data-target="#editKategoriModal"
-                                data-id="{{ $category->id }}"
+                                data-id="{{ $category->id_kategori }}"
                                 data-nama="{{ $category->nama_kategori }}">Edit</button>
-                            <button class="btn btn-danger ml-2 btn-delete" data-id="{{ $category->id }}" data-nama="{{ $category->nama_kategori }}">Delete</button>
+                            <form action="{{ route('kategori.destroy') }}" method="POST" style="display: inline;">
+                                @csrf
+                                @method('DELETE')
+                                <input type="hidden" name="id" value="{{$category->id_kategori}}">
+                                <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this category?');">
+                                    Delete
+                                </button>
+                            </form>
                         </td>
                         </tr>
                         @endforeach
@@ -70,43 +77,41 @@
 </div>
 
 <!-- Modal Edit Kategori -->
+<!-- Edit Modal -->
 <div class="modal fade" id="editKategoriModal" tabindex="-1" role="dialog" aria-labelledby="editKategoriModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="editKategoriModalLabel">Edit Data Kategori</h5>
+                <h5 class="modal-title" id="editKategoriModalLabel">Edit Kategori</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form id="editKategoriForm" method="POST" action="" class="p-3">
+            <form id="editKategoriForm" method="POST" action="">
                 @csrf
-                @method('PUT')
-                <input type="hidden" id="editKategoriId" name="id_kategori">
-                
-                <!-- Nama Kategori Field -->
-                <div class="form-group mt-3">
-                    <label for="editNamaKategori">Nama Kategori</label>
-                    <input type="text" class="form-control" id="editNamaKategori" name="nama_kategori" required>
+                @method('PUT') <!-- method PUT untuk update data -->
+                <div class="modal-body">
+                    <input type="hidden" id="editKategoriId" name="id">
+                    <div class="form-group">
+                        <label for="editNamaKategori">Nama Kategori</label>
+                        <input type="text" class="form-control" id="editNamaKategori" name="nama_kategori" required>
+                    </div>
                 </div>
-
-                <div class="modal-footer mt-4">
+                <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary">Save Changes</button>
+                    <button type="submit" class="btn btn-primary">Update</button>
                 </div>
             </form>
         </div>
     </div>
 </div>
-
 @endsection
 
 
 
 @section('script')
 <script>
-
-   $(document).ready(function() {
+$(document).ready(function() {
     var successMessage = "{{ session('success') }}";
     var errorMessage = "{{ session('error') }}";
 
@@ -119,53 +124,27 @@
     }
 
     $('#dttable').DataTable({
-    "order": [[0, 'desc']],
-});
-
-
-    // Populate edit modal with AJAX request
-   // Populate edit modal with AJAX request
-$('.btn-edit').click(function() {
-    var itemId = $(this).data('id');
-    $.get("{{ url('/kategori') }}" + '/' + itemId + '/edit', function(data) {
-        if (data) {
-            $('#editKategoriId').val(data.id); // Set hidden input with category ID
-            $('#editNamaKategori').val(data.nama_kategori); // Set category name
-            $('#editKategoriForm').attr('action', "{{ url('/kategori') }}" + '/' + itemId); // Set action URL
-            $('#editKategoriModal').modal('show'); // Show the modal
-        } else {
-            toastr.error('Data kategori tidak ditemukan.');
-        }
-    }).fail(function(jqXHR, textStatus, errorThrown) {
-        toastr.error('Terjadi kesalahan saat mengambil data: ' + textStatus);
+        "order": [[0, 'desc']],
     });
-});
 
-
-
-    // Handle delete action
-    $('.btn-delete').click(function() {
-        var itemId = $(this).data('id');
-        var itemName = $(this).data('nama');
-        if (confirm("Are you sure you want to delete " + itemName + "?")) {
-            $.ajax({
-                url: "{{ url('/kategori') }}" + '/' + itemId, // Update URL sesuai dengan route
-                type: "POST",
-                data: {
-                    _token: "{{ csrf_token() }}",
-                    _method: "DELETE"
-                },
-                success: function(response) {
-                    window.location.reload();
-                    toastr.success("Kategori berhasil dihapus");
-                },
-                error: function(xhr) {
-                    toastr.error("Terjadi kesalahan: " + xhr.responseText);
-                }
-            });
-        }
+    // Edit Kategori
+    $('.btn-edit').click(function() {
+        var itemId = $(this).data('id'); // Ambil ID dari data-id tombol
+        $.get("{{ url('/kategori') }}" + '/' + itemId + '/edit', function(data) {
+            if (data) {
+                $('#editKategoriId').val(data.id); // Set ID ke hidden input
+                $('#editNamaKategori').val(data.nama_kategori); // Set nama kategori ke input
+                $('#editKategoriForm').attr('action', "{{ url('/kategori') }}" + '/' + itemId); // Set action form
+                $('#editKategoriModal').modal('show'); // Tampilkan modal
+            } else {
+                toastr.error('Data kategori tidak ditemukan.');
+            }
+        }).fail(function(jqXHR, textStatus, errorThrown) {
+            toastr.error('Terjadi kesalahan saat mengambil data: ' + textStatus);
+        });
     });
 });
 </script>
+
 
 @endsection
