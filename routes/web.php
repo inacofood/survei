@@ -7,8 +7,6 @@ use App\Http\Controllers\CcisController;
 use App\Exports\NilaiOcaiExport;
 use Maatwebsite\Excel\Facades\Excel;
 
-
-
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -39,8 +37,8 @@ Route::get('/export-list-links', 'ListController@export')->name('export');
 Route::get('/get-modal-data', 'ListController@getModalData');
 Route::delete('/delete/{id}', 'ListController@deleteData')->name('delete');
 Route::get('/download', 'InputController@Download');
-
-Route::get('/ocai', [CcisController::class, 'index'])->name('ccis');
+Route::get('/ccis', [CcisController::class, 'index'])->name('ccis');
+Route::get('/ocai', [CcisController::class, 'index'])->name('ocai');
 Route::get('/kategori', [CcisController::class, 'indexkategori'])->name('kategori.index');
 Route::post('/kategori', [CcisController::class, 'store'])->name('kategori.store');
 Route::get('/kategori/{id}/edit', [CcisController::class, 'edit'])->name('kategori.edit');

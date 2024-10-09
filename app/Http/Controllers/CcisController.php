@@ -14,15 +14,16 @@ use PhpOffice\PhpSpreadsheet\IOFactory;
 
 
 class CcisController extends Controller{
-  
+
     public function index(){
+
         $departments = Departments::all();
         return view('ccis', compact('departments'));
     }
 
     public function indexkategori()
     {
-        $categories = Kategori_ocai::all(); 
+        $categories = Kategori_ocai::all();
         return view('ocai', compact('categories'));
     }
 
@@ -54,6 +55,9 @@ class CcisController extends Controller{
         return redirect()->route('kategori.index')->with('success', 'Kategori berhasil diperbarui!');
     }
 
+    }
+
+
     public function destroy(Request $request)
     {
     
@@ -66,10 +70,12 @@ class CcisController extends Controller{
 
     public function indextitle()
     {
+
         $kategori = Kategori_ocai::all();
         $title = Title_ocai::with('kategori')->get(); 
         
         return view('title', compact('title', 'kategori'));
+
     }
 
     public function storetitle(Request $request)
@@ -84,6 +90,7 @@ class CcisController extends Controller{
             'id_kategori' => $request->id_kategori, // Ubah id_kategori menjadi kategori_id
         ]);
 
+
         return redirect()->back()->with('success', 'Item berhasil disimpan!');
     }
 
@@ -96,7 +103,10 @@ class CcisController extends Controller{
         } else {
             return response()->json(['message' => 'Title tidak ditemukan'], 404);
         }
+
+        return redirect()->route('title.index')->with('success', 'Title berhasil ditambahkan!');
     }
+
     
     public function updatetitle(Request $request)
     {
@@ -107,6 +117,7 @@ class CcisController extends Controller{
     
         return redirect()->back()->with('success', 'Item berhasil diperbaharui!');
     }
+
 
     public function destroytitle(Request $request)
     {
@@ -120,6 +131,7 @@ class CcisController extends Controller{
     
     public function ocaiindex()
     {
+
         $nilaiOcai = Nilai_ocai::orderBy('id_nilai', 'desc')->get(); 
         foreach ($nilaiOcai as $nilai) {
             $nilai->nilai_saat_ini = json_decode($nilai->nilai_saat_ini, true);
@@ -132,6 +144,7 @@ class CcisController extends Controller{
     
         return view('nilaiocai', compact('nilaiOcai'));
     }    
+
 
     public function ocaistore(Request $request)
     {
@@ -158,13 +171,14 @@ class CcisController extends Controller{
                 'nama' => $request->input('nama'),
                 'department' => $request->input('department'),
                 'id_kategori' => $idTitle,
-                'nilai_saat_ini' => json_encode($nilaiSaatIni),  
-                'nilai_ideal' => json_encode($nilaiIdeal),    
+                'nilai_saat_ini' => json_encode($nilaiSaatIni),
+                'nilai_ideal' => json_encode($nilaiIdeal),
             ]);
         }
 
         return redirect()->back()->with('success', 'Data berhasil disimpan!');
     }
+
 
     public function exportocai()
     {
@@ -187,3 +201,4 @@ class CcisController extends Controller{
 
     
 }
+
