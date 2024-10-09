@@ -323,26 +323,26 @@
             <tr>
                 <td style="text-align:center">A</td>
                 <td style="width: 80%;  white-space: normal; overflow: visible; text-overflow: clip;">Organisasi mendefinisikan keberhasilan berdasarkan pengembangan sumber daya manusia, kerja sama tim, komitmen karyawan, dan kepedulian terhadap lingkungan kerja.</td>
-                <td><input type="number" name="nilaisaatini61" min="1" max="100" oninput="validateInput(this, 'dttable6')"></td>
-                <td><input type="number" name="nilaiideal61" min="1" max="100" oninput="validateInput(this, 'dttable6')"></td>
+                <td><input type="number" name="nilaisaatini61" min="1" max="5" oninput="validateInput(this, 'dttable6')"></td>
+                <td><input type="number" name="nilaiideal61" min="1" max="5" oninput="validateInput(this, 'dttable6')"></td>
             </tr>
             <tr>
                 <td style="text-align:center">B</td>
                 <td style="width: 80%;  white-space: normal; overflow: visible; text-overflow: clip;">Organisasi mendefinisikan keberhasilan berdasarkan kemampuan penciptaan produk unik atau terbaru, menjadi pelopor dan inovator di industrinya.</td>
-                <td><input type="number" name="nilaisaatini62" min="1" max="100" oninput="validateInput(this, 'dttable6')"></td>
-                <td><input type="number" name="nilaiideal62" min="1" max="100" oninput="validateInput(this, 'dttable6')"></td>
+                <td><input type="number" name="nilaisaatini62" min="1" max="5" oninput="validateInput(this, 'dttable6')"></td>
+                <td><input type="number" name="nilaiideal62" min="1" max="5" oninput="validateInput(this, 'dttable6')"></td>
             </tr>
             <tr>
                 <td style="text-align:center">C</td>
                 <td style="width: 80%;  white-space: normal; overflow: visible; text-overflow: clip;">Organisasi mendefinisikan keberhasilan berdasarkan keunggulan kompetitif, produk & inovasi yang unggul dan menjadi pemimpin di pasar kompetitif adalah kunci.</td>
-                <td><input type="number" name="nilaisaatini63" min="1" max="100" oninput="validateInput(this, 'dttable6')"></td>
-                <td><input type="number" name="nilaiideal63" min="1" max="100" oninput="validateInput(this, 'dttable6')"></td>
+                <td><input type="number" name="nilaisaatini63" min="1" max="5" oninput="validateInput(this, 'dttable6')"></td>
+                <td><input type="number" name="nilaiideal63" min="1" max="5" oninput="validateInput(this, 'dttable6')"></td>
             </tr>
             <tr>
                 <td style="text-align:center">D</td>
                 <td style="width: 80%;  white-space: normal; overflow: visible; text-overflow: clip;">Organisasi mendefinisikan keberhasilan berdasarkan efisiensi, seperti biaya produksi yang rendah, efisiensi pengiriman, penjadwalan kerja yang tepat, teknologi untuk mengurangi tenaga kerja.</td>
-                <td><input type="number" name="nilaisaatini64" min="1" max="100" oninput="validateInput(this, 'dttable6')"></td>
-                <td><input type="number" name="nilaiideal64" min="1" max="100" oninput="validateInput(this, 'dttable6')"></td>
+                <td><input type="number" name="nilaisaatini64" min="1" max="5" oninput="validateInput(this, 'dttable6')"></td>
+                <td><input type="number" name="nilaiideal64" min="1" max="5" oninput="validateInput(this, 'dttable6')"></td>
             </tr>
             <tr hidden>
                 <td></td>
@@ -367,9 +367,8 @@
     
     <div id="validationMessage" style="margin-top: 10px; color: red;"></div>  
 </div>
-
-    </div>
-    </form>
+</div>
+</form>
 
     <script>
         let currentTable = 1;
@@ -427,14 +426,23 @@
     updateTables(); 
 
     function validateInput(input, tableId) {
-    if (input.value > 5) {
-        input.value = 5;
-    } else if (input.value < 1) {
-        input.value = 1;
+    const value = input.value;
+
+    if (value === "") {
+        return;
     }
 
-    updateTotals(tableId);
-    }
+    if (value > 5) {
+        input.value = 5;
+    } 
+
+    else if (value < 1) {
+        input.value = 1;
+    } 
+    
+    updateTotals(tableId); 
+}
+
 
     function updateTotals(tableId) {
         const inputsKondisiSaatIni = document.querySelectorAll(`#${tableId} input[name^="nilaisaatini"]`);
@@ -562,6 +570,14 @@
 
     document.addEventListener('DOMContentLoaded', function() {
     nextButton.disabled = true;
+
+    document.querySelectorAll('input').forEach(input => {
+        input.addEventListener('keydown', function(e) {
+            if (e.key === "Enter") {
+                e.preventDefault();  // Cegah aksi submit
+            }
+        });
+    });
 
     updateTables();
     validateTable1();
