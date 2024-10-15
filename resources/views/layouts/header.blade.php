@@ -4,7 +4,7 @@
         <a class="navbar-brand" href="/">
             <!-- <img src="/imgs/Logo.ico" alt="INACO Logo" class="mr-2"> -->
             <img src="/imgs/Logo.png" alt="INACO Logo" style="width: 80px; height: auto;">
-            <strong class="text-light"><strong class="text-primary">INACO</strong> | e-Module</strong>
+            <strong class="text-light"><strong class="text-primary">INACO</strong> | SURVEI</strong>
         </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">

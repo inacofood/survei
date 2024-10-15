@@ -3,13 +3,12 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\ListLink;
 use App\Models\Kategori_ocai;
 use App\Models\Title_ocai;
 use App\Models\Nilai_ocai;
 use App\Models\Departments;
 use App\Exports\NilaiOcaiExport;
-use Maatwebsite\Excel\Facades\Excel; 
+use Maatwebsite\Excel\Facades\Excel;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 
 
@@ -41,30 +40,27 @@ class CcisController extends Controller{
     }
 
     public function edit($id)
-    { 
+    {
         $category = Kategori_ocai::findOrFail($id);
         return response()->json($category);
     }
-    
+
     public function update(Request $request, $id)
     {
-        $kategori = Kategori_ocai::findOrFail($id); 
+        $kategori = Kategori_ocai::findOrFail($id);
         $kategori->nama_kategori = $request->nama_kategori;
         $kategori->save();
-    
+
         return redirect()->route('kategori.index')->with('success', 'Kategori berhasil diperbarui!');
     }
 
-    }
-
-
     public function destroy(Request $request)
     {
-    
+
         $kategori = Kategori_ocai::findOrFail($request->id);
         $kategori->delete();
 
-       
+
         return redirect()->back()->with('success', 'Kategori berhasil dihapus!');
     }
 
@@ -72,8 +68,8 @@ class CcisController extends Controller{
     {
 
         $kategori = Kategori_ocai::all();
-        $title = Title_ocai::with('kategori')->get(); 
-        
+        $title = Title_ocai::with('kategori')->get();
+
         return view('title', compact('title', 'kategori'));
 
     }
@@ -94,7 +90,7 @@ class CcisController extends Controller{
         return redirect()->back()->with('success', 'Item berhasil disimpan!');
     }
 
-    
+
     public function edittitle($id)
     {
         $title = Title_ocai::find($id);
@@ -107,32 +103,32 @@ class CcisController extends Controller{
         return redirect()->route('title.index')->with('success', 'Title berhasil ditambahkan!');
     }
 
-    
+
     public function updatetitle(Request $request)
     {
         $title = Title_ocai::findOrFail($request->id_title);
         $title->nama_title = $request->nama_title;
         $title->id_kategori = $request->id_kategori;
         $title->save();
-    
+
         return redirect()->back()->with('success', 'Item berhasil diperbaharui!');
     }
 
 
     public function destroytitle(Request $request)
     {
-    
+
         $title = Title_ocai::findOrFail($request->id);
         $title->delete();
 
         return redirect()->back()->with('success', 'Item berhasil dihapus!');
     }
-    
-    
+
+
     public function ocaiindex()
     {
 
-        $nilaiOcai = Nilai_ocai::orderBy('id_nilai', 'desc')->get(); 
+        $nilaiOcai = Nilai_ocai::orderBy('id_nilai', 'desc')->get();
         foreach ($nilaiOcai as $nilai) {
             $nilai->nilai_saat_ini = json_decode($nilai->nilai_saat_ini, true);
             $nilai->nilai_ideal = json_decode($nilai->nilai_ideal, true);
@@ -141,9 +137,9 @@ class CcisController extends Controller{
             $carikategori = Kategori_ocai::where('id_kategori', $nilai->id_kategori)->first();
             $nilai->id_kategori = $carikategori ? $carikategori->nama_kategori : 'Unknown';
         }
-    
+
         return view('nilaiocai', compact('nilaiOcai'));
-    }    
+    }
 
 
     public function ocaistore(Request $request)
@@ -199,6 +195,6 @@ class CcisController extends Controller{
     }
 
 
-    
+
 }
 

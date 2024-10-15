@@ -19,7 +19,7 @@
                 <!-- <div class="col-md-4 d-none d-md-block mx-auto"> -->
                 <div class="col-xs-12 col-sm-6 col-md-5 d-md-block mx-auto">
                     <div class="header-content">
-                        <h3 class="header-title"><strong class="text-primary">e-Learning</strong><span class="text-light"> Module</span></h3>
+                        <h3 class="header-title"><strong class="text-primary">Inaco</strong><span class="text-light"> Survei</span></h3>
                         <!-- <h3 class="header-title"><strong class="text-primary">e-M</strong><span class="text-light">odule</span></h3> -->
                     </div>
                     <form class="header-form" action="/login" method="post">

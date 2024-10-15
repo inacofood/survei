@@ -2,7 +2,6 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
-use App\Http\Controllers\ListController;
 use App\Http\Controllers\CcisController;
 use App\Exports\NilaiOcaiExport;
 use Maatwebsite\Excel\Facades\Excel;
@@ -27,16 +26,7 @@ Route::get('/login', 'AuthController@showLoginForm')->name('login');
 Route::post('/login', 'AuthController@login');
 Route::post('/logout', 'AuthController@logout')->name('logout');
 
-
-Route::get('/', [ListController::class, 'index'])->name('list.index')->middleware('auth');
-Route::get('/subcategory-options', [ListController::class, 'getOptions']);
-Route::post('/update-data', 'ListController@updateData')->name('update');
-Route::post('/add-new-module', 'InputController@addNewModule')->name('add');
-Route::post('/import-from-excel', 'InputController@importFromExcel')->name('import');
-Route::get('/export-list-links', 'ListController@export')->name('export');
-Route::get('/get-modal-data', 'ListController@getModalData');
-Route::delete('/delete/{id}', 'ListController@deleteData')->name('delete');
-Route::get('/download', 'InputController@Download');
+Route::get('/', [CcisController::class, 'ocaiindex'])->name('ocai.index')->middleware('auth');
 Route::get('/ccis', [CcisController::class, 'index'])->name('ccis');
 Route::get('/ocai', [CcisController::class, 'index'])->name('ocai');
 Route::get('/kategori', [CcisController::class, 'indexkategori'])->name('kategori.index');
@@ -50,7 +40,6 @@ Route::get('/title/{id}/edit', [CcisController::class, 'edittitle'])->name('titl
 Route::put('/titleupdate', [CcisController::class, 'updatetitle'])->name('title.update');
 Route::delete('/deletetitle', [CcisController::class, 'destroytitle'])->name('title.destroy');
 Route::post('/ocai-store', [CcisController::class, 'ocaistore'])->name('ocai.store');
-Route::get('/ocai-index', [CcisController::class, 'ocaiindex'])->name('ocai.index');
 Route::delete('/nilai-ocai', [CcisController::class, 'ocaidestroy'])->name('ocai.destroy');
 Route::get('/exportocai', [CcisController::class, 'exportocai'])->name('export.ocai');
 
